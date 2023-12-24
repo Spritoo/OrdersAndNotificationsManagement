@@ -1,13 +1,13 @@
 package Assignment2.OrdersAndNotificationsManagement.model;
 
 public class Product {
-    String SerialNumber;
+    int SerialNumber;
     String Name;
     String Vendor;
     String Category;
-    float Price;
+    double Price;
     int Count;
-    public Product(String serial, String name, String vendor, String category, float price, int count) {
+    public Product(int serial, String name, String vendor, String category, double price, int count) {
         SerialNumber = serial;
         Name = name;
         Vendor = vendor;
@@ -23,5 +23,8 @@ public class Product {
     }
     public int getCount() {
         return Count;
+    }
+    public int getSerialNumber() {
+        return SerialNumber;
     }
 }
