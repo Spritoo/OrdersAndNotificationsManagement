@@ -1,8 +1,8 @@
-package Assignment2_SE_20216083_20216086_20216005_20216065.OrdersAndNotificationsManagement.model.Order;
+package Assignment2.OrdersAndNotificationsManagement.model.Order;
 
 import java.util.List;
 
-public class CompoundOrder implements IOrder{
+public class CompoundOrder implements IOrder {
     List<IOrder> orders; //can be other simple order or compound orders
     public CompoundOrder(List<IOrder> orders) {
         this.orders = orders;

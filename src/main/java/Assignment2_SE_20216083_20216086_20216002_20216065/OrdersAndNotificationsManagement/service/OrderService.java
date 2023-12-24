@@ -1,4 +1,0 @@
-package Assignment2_SE_20216083_20216086_20216005_20216065.OrdersAndNotificationsManagement.service;
-
-public abstract class OrderService {
-}
