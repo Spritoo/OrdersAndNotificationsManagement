@@ -3,9 +3,11 @@ package Assignment2_SE_20216083_20216086_20216005_20216065.OrdersAndNotification
 public class Product {
     String serialNumber;
     String name;
+    String Vendor;
     String category;
-    int price;
+    float price;
+    int count;
     public void printInfo(){
-        System.out.println("Product name: " + name + "Price: " + price);
+        System.out.println("Product name: " + name + " Price: " + price);
     }
 }
