@@ -5,4 +5,7 @@ public class Product {
     String name;
     String category;
     int price;
+    public void printInfo(){
+        System.out.println("Product name: " + name + "Price: " + price);
+    }
 }
