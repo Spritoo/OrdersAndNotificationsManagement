@@ -1,5 +1,7 @@
 package Assignment2.OrdersAndNotificationsManagement.model;
 
+import Assignment2.OrdersAndNotificationsManagement.model.Order.IOrder;
+
 import java.util.ArrayList;
 import java.util.List;
 
@@ -9,8 +11,8 @@ public class Costumer {
     String username;
     private String password;
     private String phone;
-    private List<Integer> friends;
-    private List<Order> orders;
+    private List<Costumer> friends;
+    private List<IOrder> orders;
     public Costumer() {
         ID = 0;
         username = "";
@@ -67,14 +69,11 @@ public class Costumer {
     public void setID(int ID) {
         this.ID = ID;
     }
-
-    public void addFriend(int friendID) {
-        if (!friends.contains(friendID)) {
-            friends.add(friendID);
-        }
+    public List<Costumer> getFriends() {
+        return friends;
+    }
+    public void addFriends(Costumer costumer) {
+        friends.add(costumer);
     }
 
-    public void removeFriend(int friendID) {
-        friends.remove(Integer.valueOf(friendID));
-    }
 }
