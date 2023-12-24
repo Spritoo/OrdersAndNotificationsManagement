@@ -15,9 +15,6 @@ public class Product {
         Price = price;
         Count = count;
     }
-    public void printInfo(){ // this shouldn't be here
-        System.out.println("Product name: " + Name + " Price: " + Price);
-    }
     public void setCount(int count) {
         Count = count;
     }

@@ -1,9 +1,12 @@
 package Assignment2.OrdersAndNotificationsManagement.model.Order;
 
+import Assignment2.OrdersAndNotificationsManagement.model.Product;
+
+import java.util.ArrayList;
 import java.util.List;
 
 public class CompoundOrder implements IOrder {
-    List<IOrder> orders; //can be other simple order or compound orders
+    List<IOrder> orders; //can be either simple order or compound orders
     public CompoundOrder(List<IOrder> orders) {
         this.orders = orders;
     }
@@ -22,9 +25,15 @@ public class CompoundOrder implements IOrder {
         orders.remove(order);
     }
     @Override
-    public void displayInfo() {
+    public List<Product> getInfo() { // I am 90% sure this will not work
+        List<Product> products = new ArrayList<>();
+
         for (IOrder order: orders) {
-            order.displayInfo();
+
+            products.addAll(order.getInfo());
+
         }
+
+        return products;
     }
 }

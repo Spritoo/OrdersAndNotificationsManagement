@@ -15,9 +15,7 @@ public class SimpleOrder implements IOrder{
     public void addProduct(Product product){
         productList.add(product);
     }
-    public void displayInfo(){
-        for (Product product: productList) {
-            product.printInfo();
-        }
+    public List<Product> getInfo(){
+        return productList;
     }
 }
