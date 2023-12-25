@@ -7,7 +7,7 @@ import java.util.Map;
 import java.util.Set;
 
 public class ProductDB {
-    public static Map<Integer, Product> products = new HashMap<Integer, Product>();
+    private static Map<Integer, Product> products = new HashMap<Integer, Product>();
     private static ProductDB instance = null;
     public ProductDB getInstance(){
         if(instance == null){

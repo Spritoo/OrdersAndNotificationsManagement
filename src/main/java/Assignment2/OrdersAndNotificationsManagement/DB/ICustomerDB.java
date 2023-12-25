@@ -6,8 +6,8 @@ import java.util.HashMap;
 import java.util.Map;
 
 public interface ICustomerDB {
-    public static Map<Integer, Customer> customers = new HashMap<Integer, Customer>();
-    public void add(Customer costumer);
+
+    public boolean add(Customer costumer);
     public void remove(Customer costumer);
     public void updateBalance(Customer costumer, Double balance);
     public void addfriend(Customer me, Customer friend);
