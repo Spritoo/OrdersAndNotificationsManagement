@@ -66,9 +66,17 @@ public class CustomerDB implements ICustomerDB{
     }
 
     @Override
-    public List<String> GetFriends(String email)
-    {
-        return customers.get(email).getFriends();
+    public List<String> GetFriends(String email) {
+        Customer customer = customers.get(email);
+        if (customer != null) {
+            List<String> friends = customer.getFriends();
+            return friends != null ? friends : new ArrayList<>();
+        } else {
+            // Handle the case where the customer is not found
+            return new ArrayList<>();
+        }
     }
+
+
 
 }

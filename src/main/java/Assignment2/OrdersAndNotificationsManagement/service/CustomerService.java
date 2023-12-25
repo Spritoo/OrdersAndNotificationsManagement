@@ -12,7 +12,7 @@ public interface CustomerService {
 
     public boolean createAccount(Customer customer);
 
-    public List<String> listfriends(String id);
+    public List<String> listfriends(String email);
 
     public boolean addFriend(Credentials credentials, String friendId) ;
 

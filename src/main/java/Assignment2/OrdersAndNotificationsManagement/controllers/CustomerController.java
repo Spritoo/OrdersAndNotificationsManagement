@@ -44,13 +44,18 @@ public class CustomerController {
         return response;
     }
 
-    @GetMapping("/listfriends")
-    public ResponseEntity<List<String>> listfriends(@RequestBody String email) {
-        if(customerService.listfriends(email) == null){
+    @GetMapping("/listfriends/{email}")
+    public ResponseEntity<List<String>> listfriends(@PathVariable String email) {
+        List<String> friends = customerService.listfriends(email);
+
+        if (friends == null || friends.isEmpty()) {
             return new ResponseEntity<>(HttpStatus.NO_CONTENT);
         }
-        return new ResponseEntity<>(customerService.listfriends(email), HttpStatus.OK);
+
+        return new ResponseEntity<>(friends, HttpStatus.OK);
     }
+
+
 
     @GetMapping("/check")
     public ResponseEntity<UserInfo> getInfo(@RequestBody Credentials credentials) {

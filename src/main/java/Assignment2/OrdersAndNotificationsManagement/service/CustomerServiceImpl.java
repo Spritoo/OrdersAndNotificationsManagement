@@ -36,7 +36,7 @@ public class CustomerServiceImpl implements CustomerService{
     public boolean addFriend(Credentials credentials, String friendEmail) {
         Customer customer = customerDB.getCustomer(credentials.getEmail());
         Customer friend = customerDB.getCustomer(friendEmail);
-        if(customer != null & friend != null) {
+        if(customer != null && friend != null) {
             if (customerDB.addfriend(credentials.getEmail(), friendEmail))
                 return true;
 
