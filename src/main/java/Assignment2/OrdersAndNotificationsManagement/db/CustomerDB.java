@@ -2,12 +2,15 @@ package Assignment2.OrdersAndNotificationsManagement.db;
 
 import Assignment2.OrdersAndNotificationsManagement.model.Customer;
 
+import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 public class CustomerDB implements ICustomerDB{
     private static CustomerDB instance = null;
     private static Map<Integer, Customer> customers = new HashMap<Integer, Customer>();
+    public  static List<Customer> customer = new ArrayList<>();
     public CustomerDB getInstance() {
         if(instance == null) {
             instance = new CustomerDB();
@@ -49,5 +52,24 @@ public class CustomerDB implements ICustomerDB{
         } else {
             return null;
         }
+    }
+    @Override
+    public List<Customer> GetFriends(int id)//to do
+    {
+        if(customers.containsKey(id))
+        {
+            return customers.get(id).getFriends();
+        }
+        return null;
+    }
+    @Override
+    public List<Customer> getallCustomer()//to do
+    {
+        List<Customer> Customer;
+        for(Customer customer: customer)
+        {
+            //return customer;
+        }
+        return null;
     }
 }

@@ -15,7 +15,7 @@ public class ProductDB {
         }
         return instance;
     }
-    public void add(Product product) {
+    public static void add(Product product) {
         products.put(product.getSerialNumber(),product);
     }
 
@@ -53,9 +53,5 @@ public class ProductDB {
         return products.get(serial).getCount();
     }
 
-    public void addTestProducts() { // to test it but how to run this I don't know
-        add(new Product(1101,"shampo","koria","healthCare",12.5,10));
-        add(new Product(1102,"pizza","china","food",5.25,30));
-        add(new Product(1103,"Iphone25","apple","games",600,3));
-    } //for testing
+
 }

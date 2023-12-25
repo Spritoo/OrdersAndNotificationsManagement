@@ -11,17 +11,14 @@ import java.util.List;
 @Service
 public class CustomerServiceImpl implements CustomerService{
     private CustomerDB customerDB;
-    private ProductDB productDB;
+
 
     CustomerServiceImpl(){
         customerDB = new CustomerDB();
         customerDB = customerDB.getInstance();
-        productDB = new ProductDB();
-        productDB = productDB.getInstance();
     }
     @Override
     public boolean createAccount(Customer customer){
-        //customerDB = customerDB.getInstance();
         if(customerDB.add(customer) & customer != null){
                 return true;
         }
@@ -31,9 +28,9 @@ public class CustomerServiceImpl implements CustomerService{
 
     }
     @Override
-    public List<Product> listAllProductsForCustomer(){
-            List<Product> products = List.of(productDB.getProducts());
-            return products;
+    public List<Customer> listfriends()//to doo
+    {
+        return null;
     }
     @Override
     public boolean addFriend(int customerId,int friendId) {

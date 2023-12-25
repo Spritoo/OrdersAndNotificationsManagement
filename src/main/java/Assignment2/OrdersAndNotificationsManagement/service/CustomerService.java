@@ -9,12 +9,12 @@ import java.util.List;
 public interface CustomerService {
 
 
-    abstract public boolean createAccount(Customer customer);
+    public boolean createAccount(Customer customer);
 
-
+    public List<Customer> listfriends();
 
     public boolean addFriend(int customerId,int friendId) ;
 
 
-    public List<Product> listAllProductsForCustomer();
+
 }

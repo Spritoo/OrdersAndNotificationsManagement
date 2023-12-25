@@ -1,13 +1,16 @@
 package Assignment2.OrdersAndNotificationsManagement.controllers;
 
+import Assignment2.OrdersAndNotificationsManagement.db.ProductDB;
 import Assignment2.OrdersAndNotificationsManagement.model.Customer;
+import Assignment2.OrdersAndNotificationsManagement.model.Product;
 import Assignment2.OrdersAndNotificationsManagement.service.CustomerService;
 import Assignment2.OrdersAndNotificationsManagement.model.Response;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.*;
+
+import java.util.List;
 
 @RestController
 @RequestMapping("/customer")
@@ -27,5 +30,11 @@ public class CustomerController {
         }
         return response;
     }
+    //@GetMapping("/listCustomer")
+    //public Response listCustomer(@RequestBody)
+
+    //@GetMapping("/listfriends")
+    //public Response listfriends(@RequestBody)
+
 
 }
