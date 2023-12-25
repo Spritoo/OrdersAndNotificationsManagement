@@ -6,11 +6,11 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.Iterator;
 
 public class CustomerDB implements ICustomerDB{
     private static CustomerDB instance = null;
     private static Map<Integer, Customer> customers = new HashMap<Integer, Customer>();
-    public  static List<Customer> customer = new ArrayList<>();
     public CustomerDB getInstance() {
         if(instance == null) {
             instance = new CustomerDB();
@@ -65,11 +65,12 @@ public class CustomerDB implements ICustomerDB{
     @Override
     public List<Customer> getallCustomer()//to do
     {
-        List<Customer> Customer;
-        for(Customer customer: customer)
-        {
-            //return customer;
+        Iterator<Map.Entry<Integer, Customer>> iterator = customers.entrySet().iterator();
+        List<Customer> allFriends = new ArrayList<>();
+        while (iterator.hasNext()) {
+            Map.Entry<Integer, Customer> entry = iterator.next();
+            allFriends.addAll(entry.getValue().getFriends());
         }
-        return null;
+        return allFriends;
     }
 }
