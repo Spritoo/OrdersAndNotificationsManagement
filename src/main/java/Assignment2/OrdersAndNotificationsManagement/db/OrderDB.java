@@ -1,6 +1,6 @@
 package Assignment2.OrdersAndNotificationsManagement.db;
 
-import Assignment2.OrdersAndNotificationsManagement.model.Customer;
+import Assignment2.OrdersAndNotificationsManagement.model.user.Customer;
 import Assignment2.OrdersAndNotificationsManagement.model.order.IOrder;
 
 public class OrderDB implements IOrderDB{

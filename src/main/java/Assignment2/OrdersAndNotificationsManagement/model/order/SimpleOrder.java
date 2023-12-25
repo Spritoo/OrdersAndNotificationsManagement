@@ -1,6 +1,6 @@
 package Assignment2.OrdersAndNotificationsManagement.model.order;
 
-import Assignment2.OrdersAndNotificationsManagement.model.Customer;
+import Assignment2.OrdersAndNotificationsManagement.model.user.Customer;
 import Assignment2.OrdersAndNotificationsManagement.model.Product;
 
 import java.util.List;

@@ -1,9 +1,8 @@
 package Assignment2.OrdersAndNotificationsManagement.service;
 
 import Assignment2.OrdersAndNotificationsManagement.db.CustomerDB;
-import Assignment2.OrdersAndNotificationsManagement.db.ProductDB;
-import Assignment2.OrdersAndNotificationsManagement.model.Customer;
-import Assignment2.OrdersAndNotificationsManagement.model.Product;
+import Assignment2.OrdersAndNotificationsManagement.model.user.Customer;
+import Assignment2.OrdersAndNotificationsManagement.model.user.UserInfo;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -28,14 +27,14 @@ public class CustomerServiceImpl implements CustomerService{
 
     }
     @Override
-    public List<Customer> listfriends(int id)
+    public List<UserInfo> listfriends(String email)
     {
-        return customerDB.getCustomer(id).getFriends();
+        return customerDB.GetFriends(email);
     }
     @Override
-    public boolean addFriend(int customerId,int friendId) {
-        Customer c = customerDB.getCustomer(customerId);
-        Customer friend = customerDB.getCustomer(friendId);
+    public boolean addFriend(String customerEmail, String friendEmail) {
+        Customer c = customerDB.getCustomer(customerEmail);
+        Customer friend = customerDB.getCustomer(friendEmail);
         if(c != null & friend != null) {
             customerDB.addfriend(c,friend);
             return true;
@@ -45,7 +44,7 @@ public class CustomerServiceImpl implements CustomerService{
     }
 
     @Override
-    public Customer getCustomer(int id) {
-        return customerDB.getCustomer(id);
+    public UserInfo getCustomerInfo(String email, String password) {
+        return customerDB.getCustomerInfo(email,password);
     }
 }

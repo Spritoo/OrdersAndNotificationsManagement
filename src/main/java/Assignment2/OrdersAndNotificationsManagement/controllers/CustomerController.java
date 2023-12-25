@@ -1,8 +1,8 @@
 package Assignment2.OrdersAndNotificationsManagement.controllers;
 
-import Assignment2.OrdersAndNotificationsManagement.db.ProductDB;
-import Assignment2.OrdersAndNotificationsManagement.model.Customer;
-import Assignment2.OrdersAndNotificationsManagement.model.Product;
+import Assignment2.OrdersAndNotificationsManagement.model.user.Credentials;
+import Assignment2.OrdersAndNotificationsManagement.model.user.Customer;
+import Assignment2.OrdersAndNotificationsManagement.model.user.UserInfo;
 import Assignment2.OrdersAndNotificationsManagement.service.CustomerService;
 import Assignment2.OrdersAndNotificationsManagement.model.Response;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -19,9 +19,9 @@ public class CustomerController {
     CustomerService customerService;
 
     @PostMapping("/create")
-    public Response createAccount(@RequestBody Customer customer){
+    public Response createAccount(@RequestBody Customer customer) {
         Response response = new Response();
-        if(customerService.createAccount(customer)){
+        if (customerService.createAccount(customer)) {
             response.setStatus(true);
             response.setMessage("account added");
         } else {
@@ -30,14 +30,20 @@ public class CustomerController {
         }
         return response;
     }
-    @GetMapping("/listCustomer")
-    public ResponseEntity<Customer> listCustomer(@RequestBody int id){
-        return new ResponseEntity<>(customerService.getCustomer(id), HttpStatus.OK);
-    }
+
 
     @GetMapping("/listfriends")
-    public ResponseEntity<List<Customer>> listfriends(@RequestBody int id){
-        return new ResponseEntity<>(customerService.listfriends(id), HttpStatus.OK);
+    public ResponseEntity<List<UserInfo>> listfriends(@RequestBody String email) {
+        return new ResponseEntity<>(customerService.listfriends(email), HttpStatus.OK);
     }
-    
+
+    @GetMapping("/check")
+    public ResponseEntity<UserInfo> getinfo(@RequestBody Credentials credentials) {
+        UserInfo userInfo = customerService.getCustomerInfo(credentials.email, credentials.password);
+        if (userInfo != null) {
+            return new ResponseEntity<>(userInfo, HttpStatus.OK);
+        } else {
+            return new ResponseEntity<>(HttpStatus.UNAUTHORIZED);
+        }
+    }
 }
