@@ -11,10 +11,10 @@ public interface CustomerService {
 
     public boolean createAccount(Customer customer);
 
-    public List<Customer> listfriends();
+    public List<Customer> listfriends(int id);
 
     public boolean addFriend(int customerId,int friendId) ;
 
-
+    public Customer getCustomer(int id);
 
 }

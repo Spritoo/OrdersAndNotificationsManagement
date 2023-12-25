@@ -28,9 +28,9 @@ public class CustomerServiceImpl implements CustomerService{
 
     }
     @Override
-    public List<Customer> listfriends()//to doo
+    public List<Customer> listfriends(int id)
     {
-        return null;
+        return customerDB.getCustomer(id).getFriends();
     }
     @Override
     public boolean addFriend(int customerId,int friendId) {
@@ -42,5 +42,10 @@ public class CustomerServiceImpl implements CustomerService{
         } else {
             return false;
         }
+    }
+
+    @Override
+    public Customer getCustomer(int id) {
+        return customerDB.getCustomer(id);
     }
 }

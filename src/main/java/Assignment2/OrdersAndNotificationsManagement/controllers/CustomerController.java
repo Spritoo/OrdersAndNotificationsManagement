@@ -30,11 +30,14 @@ public class CustomerController {
         }
         return response;
     }
-    //@GetMapping("/listCustomer")
-    //public Response listCustomer(@RequestBody)
+    @GetMapping("/listCustomer")
+    public ResponseEntity<Customer> listCustomer(@RequestBody int id){
+        return new ResponseEntity<>(customerService.getCustomer(id), HttpStatus.OK);
+    }
 
-    //@GetMapping("/listfriends")
-    //public Response listfriends(@RequestBody)
-
-
+    @GetMapping("/listfriends")
+    public ResponseEntity<List<Customer>> listfriends(@RequestBody int id){
+        return new ResponseEntity<>(customerService.listfriends(id), HttpStatus.OK);
+    }
+    
 }
