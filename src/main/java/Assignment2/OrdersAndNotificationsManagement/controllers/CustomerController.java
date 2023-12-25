@@ -31,15 +31,30 @@ public class CustomerController {
         return response;
     }
 
+    @PostMapping("/addFriend/{friend}")
+    public Response addFriend(@RequestBody Credentials credentials, @PathVariable("friend") String friend) {
+        Response response = new Response();
+        if (customerService.addFriend(credentials, friend)) {
+            response.setStatus(true);
+            response.setMessage("Friend added successfully");
+        } else {
+            response.setStatus(false);
+            response.setMessage("Failed to add friend");
+        }
+        return response;
+    }
 
     @GetMapping("/listfriends")
-    public ResponseEntity<List<UserInfo>> listfriends(@RequestBody String email) {
+    public ResponseEntity<List<String>> listfriends(@RequestBody String email) {
+        if(customerService.listfriends(email) == null){
+            return new ResponseEntity<>(HttpStatus.NO_CONTENT);
+        }
         return new ResponseEntity<>(customerService.listfriends(email), HttpStatus.OK);
     }
 
     @GetMapping("/check")
-    public ResponseEntity<UserInfo> getinfo(@RequestBody Credentials credentials) {
-        UserInfo userInfo = customerService.getCustomerInfo(credentials.email, credentials.password);
+    public ResponseEntity<UserInfo> getInfo(@RequestBody Credentials credentials) {
+        UserInfo userInfo = customerService.getCustomerInfo(credentials.getEmail(), credentials.getPassword());
         if (userInfo != null) {
             return new ResponseEntity<>(userInfo, HttpStatus.OK);
         } else {

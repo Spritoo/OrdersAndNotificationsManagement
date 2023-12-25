@@ -1,6 +1,7 @@
 package Assignment2.OrdersAndNotificationsManagement.service;
 
 import Assignment2.OrdersAndNotificationsManagement.db.CustomerDB;
+import Assignment2.OrdersAndNotificationsManagement.model.user.Credentials;
 import Assignment2.OrdersAndNotificationsManagement.model.user.Customer;
 import Assignment2.OrdersAndNotificationsManagement.model.user.UserInfo;
 import org.springframework.stereotype.Service;
@@ -27,20 +28,20 @@ public class CustomerServiceImpl implements CustomerService{
 
     }
     @Override
-    public List<UserInfo> listfriends(String email)
+    public List<String> listfriends(String email)
     {
         return customerDB.GetFriends(email);
     }
     @Override
-    public boolean addFriend(String customerEmail, String friendEmail) {
-        Customer c = customerDB.getCustomer(customerEmail);
+    public boolean addFriend(Credentials credentials, String friendEmail) {
+        Customer customer = customerDB.getCustomer(credentials.getEmail());
         Customer friend = customerDB.getCustomer(friendEmail);
-        if(c != null & friend != null) {
-            customerDB.addfriend(c,friend);
-            return true;
-        } else {
-            return false;
+        if(customer != null & friend != null) {
+            if (customerDB.addfriend(credentials.getEmail(), friendEmail))
+                return true;
+
         }
+        return false;
     }
 
     @Override

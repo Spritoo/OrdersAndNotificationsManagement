@@ -42,14 +42,19 @@ public class CustomerDB implements ICustomerDB{
     }
 
     @Override
-    public void addfriend(Customer me, Customer friend) {
-        customers.get(me.getUserInfo().getEmail()).addFriends(friend);
+    public boolean addfriend(String me, String friend) {
+        if(customers.get(me).getFriends().contains(friend)){
+            return false;
+        } else {
+            customers.get(me).addFriend(friend);
+            customers.get(friend).addFriend(me);
+            return true;
+        }
     }
 
     @Override
     public UserInfo getCustomerInfo(String email, String password) {
         if(customers.containsKey(email)){
-
             if(password.equals( customers.get(email).getCredentials().getPassword()))
                 return customers.get(email).getUserInfo();
 
@@ -57,35 +62,13 @@ public class CustomerDB implements ICustomerDB{
         return null;
     }
     public Customer getCustomer(String email) {
-        if(customers.containsKey(email)){
-            return customers.get(email);
-        } else {
-            return null;
-        }
+        return customers.get(email);
     }
 
     @Override
-    public List<UserInfo> GetFriends(String email)//to do
+    public List<String> GetFriends(String email)
     {
-        List<UserInfo> friendsInfo = new ArrayList<>();
-        if(customers.containsKey(email))
-        {
-            for(Customer c : customers.get(email).getFriends()) {
-                friendsInfo.add(c.getUserInfo());
-            }
-            return friendsInfo;
-        }
-        return null;
+        return customers.get(email).getFriends();
     }
-    @Override
-    public List<Customer> getallCustomer()//to do
-    {
-        Iterator<Map.Entry<String, Customer>> iterator = customers.entrySet().iterator();
-        List<Customer> allFriends = new ArrayList<>();
-        while (iterator.hasNext()) {
-            Map.Entry<String, Customer> entry = iterator.next();
-            allFriends.addAll(entry.getValue().getFriends());
-        }
-        return allFriends;
-    }
+
 }

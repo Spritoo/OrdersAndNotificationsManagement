@@ -1,8 +1,8 @@
 package Assignment2.OrdersAndNotificationsManagement.model.user;
 
 public class Credentials {
-    public String email;
-    public String password;
+    private String email;
+    private String password;
 
     public String getEmail() {
         return email;

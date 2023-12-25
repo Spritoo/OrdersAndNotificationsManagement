@@ -10,9 +10,8 @@ public interface ICustomerDB {
     public boolean add(Customer costumer);
     public void remove(Customer costumer);
     public void updateBalance(Customer costumer, Double balance);
-    public void addfriend(Customer me, Customer friend);
+    public boolean addfriend(String me, String friend);
     public Customer getCustomer(String email);
     public UserInfo getCustomerInfo(String email, String password);
-    public List<UserInfo> GetFriends(String email);
-    public List<Customer> getallCustomer();
+    public List<String> GetFriends(String email);
 }

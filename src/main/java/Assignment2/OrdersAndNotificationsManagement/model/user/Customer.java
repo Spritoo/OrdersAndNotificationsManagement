@@ -2,16 +2,19 @@ package Assignment2.OrdersAndNotificationsManagement.model.user;
 
 import Assignment2.OrdersAndNotificationsManagement.model.order.IOrder;
 
+import java.util.ArrayList;
 import java.util.List;
 
 public class Customer {
     private Credentials credentials;
     private UserInfo userInfo;
-    private List<Customer> friends;
+    private List<String> friends;
     private List<IOrder> orders;
     public Customer(Credentials credentials,UserInfo info) {
         this.credentials = credentials;
         this.userInfo = info;
+        friends = new ArrayList<>();
+        orders = new ArrayList<>();
     }
 
     public Credentials getCredentials() {
@@ -30,13 +33,10 @@ public class Customer {
         this.userInfo = userInfo;
     }
 
-    public List<Customer> getFriends() {
+    public List<String> getFriends() {
         return friends;
     }
 
-    public void setFriends(List<Customer> friends) {
-        this.friends = friends;
-    }
 
     public List<IOrder> getOrders() {
         return orders;
@@ -46,7 +46,7 @@ public class Customer {
         this.orders = orders;
     }
 
-    public void addFriends(Customer friend){
+    public void addFriend(String friend){
         friends.add(friend);
     }
 
