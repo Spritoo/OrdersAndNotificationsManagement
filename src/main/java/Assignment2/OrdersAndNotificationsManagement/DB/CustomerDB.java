@@ -1,6 +1,6 @@
 package Assignment2.OrdersAndNotificationsManagement.DB;
 
-import Assignment2.OrdersAndNotificationsManagement.model.Costumer;
+import Assignment2.OrdersAndNotificationsManagement.model.Customer;
 
 public class CustomerDB implements ICustomerDB{
     private static CustomerDB instance = null;
@@ -12,27 +12,27 @@ public class CustomerDB implements ICustomerDB{
     }
 
     @Override
-    public void add(Costumer costumer) {
+    public void add(Customer costumer) {
         customers.put(costumer.getID(),costumer);
     }
 
     @Override
-    public void remove(Costumer costumer) {
+    public void remove(Customer costumer) {
         customers.remove(costumer.getID());
     }
 
     @Override
-    public void updateBalance(Costumer costumer, Double balance) {
+    public void updateBalance(Customer costumer, Double balance) {
         customers.get(costumer.getID()).setBalance(balance);
     }
 
     @Override
-    public void addfriend(Costumer me, Costumer friend) {
+    public void addfriend(Customer me, Customer friend) {
         customers.get(me.getID()).addFriends(friend);
     }
 
     @Override
-    public Costumer getCustomer(int id) {
+    public Customer getCustomer(int id) {
         return customers.get(id);
     }
 }

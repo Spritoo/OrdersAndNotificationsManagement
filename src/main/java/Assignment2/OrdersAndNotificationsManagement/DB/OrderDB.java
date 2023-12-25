@@ -1,6 +1,6 @@
 package Assignment2.OrdersAndNotificationsManagement.DB;
 
-import Assignment2.OrdersAndNotificationsManagement.model.Costumer;
+import Assignment2.OrdersAndNotificationsManagement.model.Customer;
 import Assignment2.OrdersAndNotificationsManagement.model.Order.IOrder;
 
 public class OrderDB implements IOrderDB{
@@ -13,12 +13,12 @@ public class OrderDB implements IOrderDB{
     }
 
     @Override
-    public void add(Costumer costumer, IOrder order) {
+    public void add(Customer costumer, IOrder order) {
         orders.put(costumer,order);
     }
 
     @Override
-    public void remove(Costumer costumer) {
+    public void remove(Customer costumer) {
         orders.remove(costumer);
     }
 }

@@ -1,17 +1,15 @@
 package Assignment2.OrdersAndNotificationsManagement.DB;
 
-import Assignment2.OrdersAndNotificationsManagement.model.Costumer;
-import Assignment2.OrdersAndNotificationsManagement.model.Order.IOrder;
+import Assignment2.OrdersAndNotificationsManagement.model.Customer;
 
-import java.beans.Customizer;
 import java.util.HashMap;
 import java.util.Map;
 
 public interface ICustomerDB {
-    public static Map<Integer, Costumer> customers = new HashMap<Integer, Costumer>();
-    public void add(Costumer costumer);
-    public void remove(Costumer costumer);
-    public void updateBalance(Costumer costumer,Double balance);
-    public void addfriend(Costumer me, Costumer friend);
-    public Costumer getCustomer(int id);
+    public static Map<Integer, Customer> customers = new HashMap<Integer, Customer>();
+    public void add(Customer costumer);
+    public void remove(Customer costumer);
+    public void updateBalance(Customer costumer, Double balance);
+    public void addfriend(Customer me, Customer friend);
+    public Customer getCustomer(int id);
 }

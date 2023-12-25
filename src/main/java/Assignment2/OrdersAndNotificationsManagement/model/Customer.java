@@ -5,22 +5,22 @@ import Assignment2.OrdersAndNotificationsManagement.model.Order.IOrder;
 import java.util.ArrayList;
 import java.util.List;
 
-public class Costumer {
+public class Customer {
     private int ID;
     private double balance;
     String username;
     private String password;
     private String phone;
-    private List<Costumer> friends;
+    private List<Customer> friends;
     private List<IOrder> orders;
-    public Costumer() {
+    public Customer() {
         ID = 0;
         username = "";
         password = "";
         phone = "";
         balance = 0.0;
     }
-    public Costumer(int ID , String username, String password, double balance , String phone ) {
+    public Customer(int ID , String username, String password, double balance , String phone ) {
         this.ID = ID;
         this.username = username;
         this.password = password;
@@ -69,10 +69,10 @@ public class Costumer {
     public void setID(int ID) {
         this.ID = ID;
     }
-    public List<Costumer> getFriends() {
+    public List<Customer> getFriends() {
         return friends;
     }
-    public void addFriends(Costumer costumer) {
+    public void addFriends(Customer costumer) {
         friends.add(costumer);
     }
 
