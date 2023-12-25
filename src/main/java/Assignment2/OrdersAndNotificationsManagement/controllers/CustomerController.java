@@ -1,8 +1,8 @@
-package Assignment2.OrdersAndNotificationsManagement.Controllers;
+package Assignment2.OrdersAndNotificationsManagement.controllers;
 
 import Assignment2.OrdersAndNotificationsManagement.model.Customer;
 import Assignment2.OrdersAndNotificationsManagement.service.CustomerService;
-import Assignment2.OrdersAndNotificationsManagement.service.Response;
+import Assignment2.OrdersAndNotificationsManagement.model.Response;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
@@ -27,5 +27,5 @@ public class CustomerController {
         }
         return response;
     }
-    
+
 }

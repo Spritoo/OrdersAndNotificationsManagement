@@ -1,4 +1,4 @@
-package Assignment2.OrdersAndNotificationsManagement.service;
+package Assignment2.OrdersAndNotificationsManagement.model;
 
 public class Response {
     private boolean status;

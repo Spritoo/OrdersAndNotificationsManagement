@@ -1,6 +1,6 @@
 package Assignment2.OrdersAndNotificationsManagement.model;
 
-import Assignment2.OrdersAndNotificationsManagement.model.Order.IOrder;
+import Assignment2.OrdersAndNotificationsManagement.model.order.IOrder;
 
 import java.util.ArrayList;
 import java.util.List;

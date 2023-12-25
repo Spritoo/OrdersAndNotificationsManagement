@@ -1,9 +1,6 @@
-package Assignment2.OrdersAndNotificationsManagement.DB;
+package Assignment2.OrdersAndNotificationsManagement.db;
 
 import Assignment2.OrdersAndNotificationsManagement.model.Customer;
-
-import java.util.HashMap;
-import java.util.Map;
 
 public interface ICustomerDB {
 

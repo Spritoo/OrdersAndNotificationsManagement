@@ -1,4 +1,4 @@
-package Assignment2.OrdersAndNotificationsManagement.model.Order;
+package Assignment2.OrdersAndNotificationsManagement.model.order;
 
 import Assignment2.OrdersAndNotificationsManagement.model.Customer;
 import Assignment2.OrdersAndNotificationsManagement.model.Product;

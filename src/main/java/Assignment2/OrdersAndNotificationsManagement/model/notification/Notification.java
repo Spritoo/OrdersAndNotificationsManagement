@@ -1,4 +1,4 @@
-package Assignment2.OrdersAndNotificationsManagement.model;
+package Assignment2.OrdersAndNotificationsManagement.model.notification;
 
 public class Notification {
     private String notificationId;

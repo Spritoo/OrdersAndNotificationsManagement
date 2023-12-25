@@ -1,7 +1,7 @@
-package Assignment2.OrdersAndNotificationsManagement.DB;
+package Assignment2.OrdersAndNotificationsManagement.db;
 
 import Assignment2.OrdersAndNotificationsManagement.model.Customer;
-import Assignment2.OrdersAndNotificationsManagement.model.Order.IOrder;
+import Assignment2.OrdersAndNotificationsManagement.model.order.IOrder;
 
 import java.util.HashMap;
 import java.util.Map;

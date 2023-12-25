@@ -1,14 +1,11 @@
 package Assignment2.OrdersAndNotificationsManagement.service;
 
-import Assignment2.OrdersAndNotificationsManagement.DB.CustomerDB;
-import Assignment2.OrdersAndNotificationsManagement.DB.ProductDB;
+import Assignment2.OrdersAndNotificationsManagement.db.CustomerDB;
+import Assignment2.OrdersAndNotificationsManagement.db.ProductDB;
 import Assignment2.OrdersAndNotificationsManagement.model.Customer;
 import Assignment2.OrdersAndNotificationsManagement.model.Product;
-import org.springframework.http.HttpStatus;
-import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 
-import java.util.ArrayList;
 import java.util.List;
 
 @Service
