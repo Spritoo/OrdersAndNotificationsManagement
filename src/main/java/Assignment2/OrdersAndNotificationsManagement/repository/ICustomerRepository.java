@@ -1,11 +1,11 @@
-package Assignment2.OrdersAndNotificationsManagement.db;
+package Assignment2.OrdersAndNotificationsManagement.repository;
 
 import Assignment2.OrdersAndNotificationsManagement.model.user.Customer;
 import Assignment2.OrdersAndNotificationsManagement.model.user.UserInfo;
 
 import java.util.List;
 
-public interface ICustomerDB {
+public interface ICustomerRepository {
 
     public boolean add(Customer costumer);
     public void remove(Customer costumer);

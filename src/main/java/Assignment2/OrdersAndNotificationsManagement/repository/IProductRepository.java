@@ -1,11 +1,11 @@
-package Assignment2.OrdersAndNotificationsManagement.db;
+package Assignment2.OrdersAndNotificationsManagement.repository;
 
 import Assignment2.OrdersAndNotificationsManagement.model.Product;
 
 import java.util.HashMap;
 import java.util.Map;
 
-public interface IProductDB {
+public interface IProductRepository {
     public static Map<Integer, Product> products = new HashMap<Integer, Product>();
     public void add(Product product);
     public Product getProduct(int serial);

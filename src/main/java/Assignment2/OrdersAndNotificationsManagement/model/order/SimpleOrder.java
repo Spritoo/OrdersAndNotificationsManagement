@@ -10,12 +10,21 @@ public class SimpleOrder implements IOrder{
 
     Customer simpleOrderOwner;
     SimpleOrder(Customer costumer){
+
         simpleOrderOwner = costumer;
     }
+
     public void addProduct(Product product){
+
         productList.add(product);
     }
+
     public List<Product> getInfo(){
+
         return productList;
+    }
+
+    public void removeOrder(Product product) {
+        productList.remove(product);
     }
 }

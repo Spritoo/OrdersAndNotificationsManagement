@@ -1,4 +1,4 @@
-package Assignment2.OrdersAndNotificationsManagement.controllers;
+package Assignment2.OrdersAndNotificationsManagement.controller;
 
 import Assignment2.OrdersAndNotificationsManagement.model.user.Credentials;
 import Assignment2.OrdersAndNotificationsManagement.model.user.Customer;
@@ -46,7 +46,7 @@ public class CustomerController {
 
     @GetMapping("/listfriends/{email}")
     public ResponseEntity<List<String>> listfriends(@PathVariable String email) {
-        List<String> friends = customerService.listfriends(email);
+        List<String> friends = customerService.listFriends(email);
 
         if (friends == null || friends.isEmpty()) {
             return new ResponseEntity<>(HttpStatus.NO_CONTENT);

@@ -1,4 +1,4 @@
-package Assignment2.OrdersAndNotificationsManagement.controllers;
+package Assignment2.OrdersAndNotificationsManagement.controller;
 
 import Assignment2.OrdersAndNotificationsManagement.model.Product;
 import Assignment2.OrdersAndNotificationsManagement.service.ProductService;

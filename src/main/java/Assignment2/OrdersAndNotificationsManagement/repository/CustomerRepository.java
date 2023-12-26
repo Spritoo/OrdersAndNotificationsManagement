@@ -1,4 +1,4 @@
-package Assignment2.OrdersAndNotificationsManagement.db;
+package Assignment2.OrdersAndNotificationsManagement.repository;
 
 import Assignment2.OrdersAndNotificationsManagement.model.user.Customer;
 import Assignment2.OrdersAndNotificationsManagement.model.user.UserInfo;
@@ -7,15 +7,18 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
-import java.util.Iterator;
 
-public class CustomerDB implements ICustomerDB{
-    private static CustomerDB instance = null;
-    private static Map<String, Customer> customers = new HashMap<String, Customer>();
-    public CustomerDB getInstance() {
-        if(instance == null) {
-            instance = new CustomerDB();
+public class CustomerRepository implements ICustomerRepository {
+    private static CustomerRepository instance = null;
+    private Map<String, Customer> customers = new HashMap<String, Customer>();
+
+    private CustomerRepository() {}
+
+    public static CustomerRepository getInstance() {
+        if (instance == null) {
+            instance = new CustomerRepository();
         }
+
         return instance;
     }
 

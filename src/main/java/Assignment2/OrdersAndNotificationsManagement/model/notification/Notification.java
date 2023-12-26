@@ -3,14 +3,14 @@ package Assignment2.OrdersAndNotificationsManagement.model.notification;
 public class Notification {
     private String notificationId;
     private String recipient;
-    private String templateType;
+    private NotificationTemplate template;
     private String content;
     private String status; //sent, pending
 
-    public Notification(String notificationId, String recipient, String templateType, String content, String status) {
+    public Notification(String notificationId, String recipient, NotificationTemplate template, String content, String status) {
         this.notificationId = notificationId;
         this.recipient = recipient;
-        this.templateType = templateType;
+        this.template = template;
         this.content = content;
         this.status = status;
     }
@@ -31,12 +31,12 @@ public class Notification {
         this.recipient = recipient;
     }
 
-    public String getTemplateType() {
-        return templateType;
+    public NotificationTemplate getTemplate() {
+        return template;
     }
 
-    public void setTemplateType(String templateType) {
-        this.templateType = templateType;
+    public void setTemplate(NotificationTemplate template) {
+        this.template = template;
     }
 
     public String getContent() {
@@ -51,7 +51,7 @@ public class Notification {
         return "Notification{" +
                 "notificationId='" + notificationId + '\'' +
                 ", recipient='" + recipient + '\'' +
-                ", templateType='" + templateType + '\'' +
+                ", template='" + template + '\'' +
                 ", content='" + content + '\'' +
                 '}';
     }

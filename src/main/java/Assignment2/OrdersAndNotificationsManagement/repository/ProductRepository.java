@@ -1,4 +1,4 @@
-package Assignment2.OrdersAndNotificationsManagement.db;
+package Assignment2.OrdersAndNotificationsManagement.repository;
 
 import Assignment2.OrdersAndNotificationsManagement.model.Product;
 
@@ -6,16 +6,20 @@ import java.util.HashMap;
 import java.util.Map;
 import java.util.Set;
 
-public class ProductDB {
-    private static Map<Integer, Product> products = new HashMap<Integer, Product>();
-    private static ProductDB instance = null;
-    public ProductDB getInstance(){
+public class ProductRepository implements IProductRepository {
+    private Map<Integer, Product> products = new HashMap<Integer, Product>();
+    private static ProductRepository instance = null;
+
+    private ProductRepository() {}
+
+    public static ProductRepository getInstance(){
         if(instance == null){
-            instance = new ProductDB();
+            instance = new ProductRepository();
         }
         return instance;
     }
-    public static void add(Product product) {
+
+    public void add(Product product) {
         products.put(product.getSerialNumber(),product);
     }
 
