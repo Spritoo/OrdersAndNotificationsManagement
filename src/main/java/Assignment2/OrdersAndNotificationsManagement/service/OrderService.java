@@ -1,7 +1,9 @@
 package Assignment2.OrdersAndNotificationsManagement.service;
 
-public abstract class OrderService {
+import Assignment2.OrdersAndNotificationsManagement.model.user.Credentials;
 
-    // place order
+public interface OrderService {
 
+    public void addToOrder(Credentials credentials , int productSerialNum);
+    
 }
