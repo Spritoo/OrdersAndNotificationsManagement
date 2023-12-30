@@ -7,7 +7,7 @@ import java.util.Map;
 
 public interface IProductRepository {
     public static Map<Integer, Product> products = new HashMap<Integer, Product>();
-    public void add(Product product);
+    public void addProduct(Product product);
     public Product getProduct(int serial);
     public Product[] getProducts();
     public void updateCount(int count, int serial);

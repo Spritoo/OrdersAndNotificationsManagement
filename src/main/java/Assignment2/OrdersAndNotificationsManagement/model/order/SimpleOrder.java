@@ -7,9 +7,9 @@ import java.util.List;
 
 public class SimpleOrder implements IOrder{
     List<Product> productList;
-
-    Customer simpleOrderOwner;
-    SimpleOrder(Customer costumer){
+    public int OrderID;
+    String simpleOrderOwner;
+    SimpleOrder(String costumer){
 
         simpleOrderOwner = costumer;
     }
@@ -22,6 +22,26 @@ public class SimpleOrder implements IOrder{
     public List<Product> getInfo(){
 
         return productList;
+    }
+
+    @Override
+    public String getOwner() {
+        return simpleOrderOwner;
+    }
+
+    @Override
+    public int getOrderId(){
+        return OrderID;
+    }
+
+    @Override
+    public void setOrderID(int orderId)
+    {
+        this.OrderID = orderId;
+    }
+    @Override
+    public void setOwner(String owner) {
+        simpleOrderOwner = owner;
     }
 
     public void removeOrder(Product product) {

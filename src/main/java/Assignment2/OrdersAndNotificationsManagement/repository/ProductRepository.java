@@ -19,7 +19,7 @@ public class ProductRepository implements IProductRepository {
         return instance;
     }
 
-    public void add(Product product) {
+    public void addProduct(Product product) {
         products.put(product.getSerialNumber(),product);
     }
 

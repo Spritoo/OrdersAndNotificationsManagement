@@ -6,11 +6,13 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class CompoundOrder implements IOrder {
+    public int OrderID;
     List<IOrder> orders; //can be either simple order or compound orders
+    public String OrderOwner;
+
     public CompoundOrder(List<IOrder> orders) {
         this.orders = orders;
     }
-
     public List<IOrder> getOrders() {
         return orders;
     }
@@ -35,5 +37,26 @@ public class CompoundOrder implements IOrder {
         }
 
         return products;
+    }
+
+    @Override
+    public int getOrderId(){
+        return OrderID;
+    }
+
+    @Override
+    public void setOrderID(int orderId)
+    {
+        this.OrderID = orderId;
+    }
+
+    @Override
+    public String getOwner() {
+        return OrderOwner;
+    }
+
+    @Override
+    public void setOwner(String owner) {
+        OrderOwner = owner;
     }
 }
