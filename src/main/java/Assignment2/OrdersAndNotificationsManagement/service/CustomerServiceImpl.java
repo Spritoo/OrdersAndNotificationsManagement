@@ -12,7 +12,7 @@ import org.springframework.stereotype.Service;
 import java.util.List;
 
 @Service
-public class CustomerServiceImpl implements CustomerService{
+public class CustomerServiceImpl implements ICustomerService {
     private final ICustomerRepository customerRepository = CustomerRepository.getInstance();
     private final IProductRepository productRepository = ProductRepository.getInstance();
 
@@ -22,17 +22,25 @@ public class CustomerServiceImpl implements CustomerService{
     }
 
     @Override
-    public List<String> listFriends(String email) {
-        return customerRepository.GetFriends(email);
+    public List<Integer> listFriends(int ID) {
+        return customerRepository.GetFriends(ID);
     }
 
     @Override
-    public boolean addFriend(Credentials credentials, String friendEmail) {
-        Customer customer = customerRepository.getCustomer(credentials.getEmail());
-        Customer friend = customerRepository.getCustomer(friendEmail);
+    public boolean addFriend(Credentials credentials, int friendID) {
+        Customer customer = customerRepository.getCustomerByCredentials(credentials);
+        Customer friend = customerRepository.getCustomerById(friendID);
 
-        if(customer != null && friend != null && credentials.getPassword().equals(customer.getCredentials().getPassword())) {
-            return customerRepository.addfriend(credentials.getEmail(), friendEmail);
+        Credentials customerCredentialsCustomer = customer.getCredentials();
+
+        boolean isRightEmailCustomer = customerCredentialsCustomer.getEmail().equals(credentials.getEmail());
+        boolean isRightPasswordCustomer = customerCredentialsCustomer.getPassword().equals(credentials.getPassword());
+
+        if (isRightEmailCustomer && isRightPasswordCustomer) {
+
+            if (customer != null && friend != null) {
+                return customerRepository.addfriend(credentials, friendID);
+            }
         }
 
         return false;
@@ -42,16 +50,9 @@ public class CustomerServiceImpl implements CustomerService{
     public UserInfo getCustomerInfo(Credentials credentials) {
         return customerRepository.getCustomerInfo(credentials);
     }
+
     @Override
-    public boolean addProductToOrder(Credentials credentials, int  productID){
-        Customer customer = customerRepository.getCustomer(credentials.getEmail());
-        if(customer != null && productRepository.checkCount(1,productID)) {
-            customer.addProductToOrder(productID);
-        }
-        return true;
-    }
-    public boolean addFriendsOrderToMyOrder(Credentials credentials,String friendMail){
-        Customer customer = customerRepository.getCustomer(credentials.getEmail());
-        if(customer != null && )
+    public Customer authenticate(Credentials credentials) {
+        return customerRepository.authenticate(credentials);
     }
 }

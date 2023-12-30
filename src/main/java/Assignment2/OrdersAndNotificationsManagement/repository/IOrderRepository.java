@@ -1,14 +1,13 @@
 package Assignment2.OrdersAndNotificationsManagement.repository;
 
-import Assignment2.OrdersAndNotificationsManagement.model.Product;
-import Assignment2.OrdersAndNotificationsManagement.model.order.IOrder;
+import Assignment2.OrdersAndNotificationsManagement.model.order.Order;
 
-import java.util.HashMap;
 import java.util.List;
-import java.util.Map;
 
 public interface IOrderRepository {
-    public void addOrder(IOrder order);
-    public IOrder getOrder(int serial);
-    public List<IOrder> getOrders();
+    public void addOrder(Order order);
+    public void removeOrder(int orderId);
+    public Order getOrder(int orderId);
+    public List<Order> getOrdersByIds(List<Integer> orderIds);
+    public List<Order> getOrders();
 }

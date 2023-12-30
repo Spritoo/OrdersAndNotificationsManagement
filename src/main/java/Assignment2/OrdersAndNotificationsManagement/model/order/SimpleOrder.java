@@ -1,51 +1,52 @@
 package Assignment2.OrdersAndNotificationsManagement.model.order;
 
-import Assignment2.OrdersAndNotificationsManagement.model.user.Customer;
 import Assignment2.OrdersAndNotificationsManagement.model.Product;
+import Assignment2.OrdersAndNotificationsManagement.model.user.Customer;
 import Assignment2.OrdersAndNotificationsManagement.repository.IProductRepository;
 
+import java.util.ArrayList;
 import java.util.List;
 
-public class SimpleOrder implements IOrder{
-    private List<Product> productList;
-    private int OrderID;
-    private String simpleOrderOwner;
-    private IProductRepository  productRepository;
-    SimpleOrder(String costumer){
-        simpleOrderOwner = costumer;
+public class SimpleOrder extends Order {
+    private List<Product> productList = new ArrayList<>();
+
+
+    public SimpleOrder(Customer owner) {
+        this.owner = owner;
     }
 
-    public void addProduct(int productID){
-        productRepository.updateCount(productRepository.getProductCount(productID)-1,productID);
-        productList.add(productRepository.getProduct(productID));
+    public SimpleOrder() {}
+
+    @Override
+    public void addProduct(Product product){
+        productList.add(product);
     }
 
-    public List<Product> getInfo(){
+    @Override
+    public void removeProduct(Product product) {
+        productList.remove(product);
+    }
 
+    public List<Product> getProducts() {
         return productList;
     }
 
     @Override
-    public String getOwner() {
-        return simpleOrderOwner;
+    public List<Order> getOrders() {
+        return null;
     }
 
     @Override
-    public int getOrderId(){
-        return OrderID;
+    public void addOrder(Order order) {
+        throw new UnsupportedOperationException("Cannot add orders to a simple order");
+    }
+
+    public boolean hasOrder(Order order) {
+        return false;
     }
 
     @Override
-    public void setOrderID(int orderId)
-    {
-        this.OrderID = orderId;
-    }
-    @Override
-    public void setOwner(String owner) {
-        simpleOrderOwner = owner;
-    }
-
-    public void removeOrder(Product product) {
-        productList.remove(product);
+    public void removeOrder(Order order) {
+        throw new UnsupportedOperationException("Cannot remove orders from a simple order");
     }
 }

@@ -7,17 +7,10 @@ import Assignment2.OrdersAndNotificationsManagement.model.user.UserInfo;
 import java.util.List;
 
 
-public interface CustomerService {
-
-
+public interface ICustomerService {
     public boolean createAccount(Customer customer);
-
-    public List<String> listFriends(String email);
-
-    public boolean addFriend(Credentials credentials, String friendId) ;
-
+    public List<Integer> listFriends(int Id);
+    public boolean addFriend(Credentials credentials, int friendId) ;
     public UserInfo getCustomerInfo(Credentials credentials);
-
-    public boolean addProductToOrder(Credentials credentials, int productID);
-
+    public Customer authenticate(Credentials credentials);
 }

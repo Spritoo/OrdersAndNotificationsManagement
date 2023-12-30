@@ -1,19 +1,132 @@
 package Assignment2.OrdersAndNotificationsManagement.service;
 
+import Assignment2.OrdersAndNotificationsManagement.dto.OrderDTO;
 import Assignment2.OrdersAndNotificationsManagement.model.Product;
 import Assignment2.OrdersAndNotificationsManagement.model.order.CompoundOrder;
-import Assignment2.OrdersAndNotificationsManagement.model.order.IOrder;
+import Assignment2.OrdersAndNotificationsManagement.model.order.Order;
 import Assignment2.OrdersAndNotificationsManagement.model.order.SimpleOrder;
 import Assignment2.OrdersAndNotificationsManagement.model.user.Customer;
-import Assignment2.OrdersAndNotificationsManagement.repository.CustomerRepository;
+import Assignment2.OrdersAndNotificationsManagement.repository.*;
 import Assignment2.OrdersAndNotificationsManagement.model.user.Credentials;
-import Assignment2.OrdersAndNotificationsManagement.repository.ProductRepository;
+import org.springframework.stereotype.Service;
 
+import java.time.Duration;
+import java.time.temporal.ChronoUnit;
+import java.util.Date;
 import java.util.List;
 import java.util.Vector;
 
-public class OrderServiceImpl implements OrderService{
-    private CustomerRepository customerRepository;
+@Service
+public class OrderServiceImpl implements IOrderService {
+    private static final int MAX_ORDER_CANCEL_TIME_IN_DAYS = 2;
+    private static final int MAX_SHIPMENT_CANCEL_TIME_IN_DAYS = 2;
+
+    IOrderRepository orderRepository = OrderRepository.getInstance();
+    IProductRepository productRepository = ProductRepository.getInstance();
+
+    public SimpleOrder createSimpleOrder(Customer owner) {
+        SimpleOrder order = new SimpleOrder(owner);
+
+        orderRepository.addOrder(order);
+
+        return order;
+    }
+
+    @Override
+    public CompoundOrder createCompoundOrder(Customer owner, List<Integer> orderIds) {
+        List<Order> orders = orderRepository.getOrdersByIds(orderIds);
+
+        if (orders.size() < orderIds.size()) {
+            return null;
+        }
+
+        CompoundOrder order = new CompoundOrder(owner, orders);
+
+        orderRepository.addOrder(order);
+
+        return order;
+    }
+
+    @Override
+    public Order getOrder(int orderId) {
+        return orderRepository.getOrder(orderId);
+    }
+
+    @Override
+    public CancellationStatus cancelOrder(int orderId) {
+        Order order = getOrder(orderId);
+
+        if (order == null) {
+            return CancellationStatus.OrderNotFound;
+        }
+
+        Date creationDate = order.getCreationDate();
+        Date currentDate = new Date();
+
+        // get difference in days between two dates
+        long diffInDays = ChronoUnit.DAYS.between(creationDate.toInstant(), currentDate.toInstant());
+
+        if (diffInDays > MAX_ORDER_CANCEL_TIME_IN_DAYS) {
+            return CancellationStatus.OrderNotCancellable;
+        }
+
+        orderRepository.removeOrder(orderId);
+
+        return CancellationStatus.Success;
+    }
+
+    @Override
+    public EditStatus addProductToOrder(int orderId, int productId) {
+        Order order = getOrder(orderId);
+
+        if (order == null) {
+            return EditStatus.ParentOrderNotFound;
+        }
+
+        Product product = productRepository.getProduct(productId);
+
+        if (product == null) {
+            return EditStatus.ProductNotFound;
+        }
+
+        try {
+            order.addProduct(product);
+            product.decrementCount();
+        } catch (UnsupportedOperationException e) {
+            return EditStatus.OrderNotCompound;
+        }
+
+        return EditStatus.Success;
+    }
+
+    @Override
+    public EditStatus addOrderToOrder(int parentOrderId, int childOrderId) {
+        Order order = getOrder(parentOrderId);
+
+        if (order == null) {
+            return EditStatus.ParentOrderNotFound;
+        }
+
+        Order childOrder = getOrder(childOrderId);
+
+        if (childOrder == null) {
+            return EditStatus.ChildOrderNotFound;
+        }
+
+        if (order.hasOrder(childOrder)) {
+            return EditStatus.OrderAlreadyContainsOrder;
+        }
+
+        try {
+            order.addOrder(childOrder);
+        } catch (UnsupportedOperationException e) {
+            return EditStatus.OrderNotCompound;
+        }
+
+        return EditStatus.Success;
+    }
+
+    /* private CustomerRepository customerRepository;
     private ProductRepository productRepository;
 
     OrderServiceImpl(){
@@ -49,12 +162,12 @@ public class OrderServiceImpl implements OrderService{
     }
 
     @Override
-    public List<IOrder> getorderById(int id) {
+    public List<Order> getOrderById(int id) {
         return null;
     }
 
     @Override
-    public List<IOrder> getAllOrders() {
+    public List<Order> getAllOrders() {
         return null;
-    }
+    } */
 }

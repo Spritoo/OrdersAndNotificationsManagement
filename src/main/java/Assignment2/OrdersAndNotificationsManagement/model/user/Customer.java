@@ -1,21 +1,34 @@
 package Assignment2.OrdersAndNotificationsManagement.model.user;
 
 import Assignment2.OrdersAndNotificationsManagement.model.order.CompoundOrder;
-import Assignment2.OrdersAndNotificationsManagement.model.order.IOrder;
+import Assignment2.OrdersAndNotificationsManagement.model.order.Order;
 
 import java.util.ArrayList;
 import java.util.List;
 
 public class Customer {
+    int id;
     private Credentials credentials;
     private UserInfo userInfo;
-    private List<String> friends;
-    private CompoundOrder order;
-    public Customer(Credentials credentials,UserInfo info) {
+    private List<Integer> friends;
+
+
+    // todo: convert friends to List<Customer>
+
+    public Customer(int id, Credentials credentials, UserInfo info) {
         this.credentials = credentials;
         this.userInfo = info;
+        this.id = id;
+
         friends = new ArrayList<>();
-        order = new CompoundOrder(userInfo.getEmail());
+    }
+
+    public int getId() {
+        return id;
+    }
+
+    public void setId(int id) {
+        this.id = id;
     }
 
     public Credentials getCredentials() {
@@ -34,21 +47,11 @@ public class Customer {
         this.userInfo = userInfo;
     }
 
-    public List<String> getFriends() {
+    public List<Integer> getFriends() {
         return friends;
     }
 
-
-    public IOrder getOrders() {
-        return order;
-    }
-
-    public void addProductToOrder(int productID){
-        order.addProduct(productID,userInfo.getEmail());
-    }
-
-    public void addFriend(String friend){
+    public void addFriend(Integer friend){
         friends.add(friend);
     }
-
 }

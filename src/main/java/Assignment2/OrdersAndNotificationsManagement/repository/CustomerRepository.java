@@ -11,7 +11,7 @@ import java.util.Map;
 
 public class CustomerRepository implements ICustomerRepository {
     private static CustomerRepository instance = null;
-    private Map<String, Customer> customers = new HashMap<String, Customer>();
+    private Map<Integer, Customer> customers = new HashMap<Integer, Customer>();
 
     private CustomerRepository() {}
 
@@ -25,11 +25,11 @@ public class CustomerRepository implements ICustomerRepository {
 
     @Override
     public boolean add(Customer costumer) {
-        if(customers.containsKey(costumer.getUserInfo().getEmail())){
+        if(customers.containsKey(costumer.getId())){
             return false;
         }
         else {
-            customers.put(costumer.getUserInfo().getEmail(),costumer);
+            customers.put(costumer.getId(),costumer);
             return true;
         }
 
@@ -37,43 +37,47 @@ public class CustomerRepository implements ICustomerRepository {
 
     @Override
     public void remove(Customer costumer) {
-        customers.remove(costumer.getUserInfo().getEmail());
+        customers.remove(costumer.getId());
     }
 
     @Override
     public void updateBalance(Customer costumer, Double balance) {
-        customers.get(costumer.getUserInfo().getEmail()).getUserInfo().setBalance(balance);
+        customers.get(costumer.getId()).getUserInfo().setBalance(balance);
     }
 
     @Override
-    public boolean addfriend(String me, String friend) {
-        if(customers.get(me).getFriends().contains(friend)){
+    public boolean addfriend(Credentials credentials, int friend) {
+        Customer customer = authenticate(credentials);
+        if(customer.getFriends().contains(friend)){
             return false;
         } else {
-            customers.get(me).addFriend(friend);
-            customers.get(friend).addFriend(me);
+            int id = customer.getId();
+            customers.get(id).addFriend(friend);
+            customers.get(friend).addFriend(id);
             return true;
         }
     }
 
     @Override
     public UserInfo getCustomerInfo(Credentials credentials) {
-        if(customers.containsKey(credentials.getEmail())){
-            if(credentials.getPassword().equals( customers.get(credentials.getEmail()).getCredentials().getPassword()))
-                return customers.get(credentials.getEmail()).getUserInfo();
-
-        }
-        return null;
-    }
-    public Customer getCustomer(String email) {
-        return customers.get(email);
+        return authenticate(credentials).getUserInfo();
     }
 
     @Override
-    public List<String> GetFriends(String email) {
-        Customer customer = customers.get(email);
+    public Customer getCustomerById(int id) {
+        return customers.get(id);
+    }
+
+    @Override
+    public Customer getCustomerByCredentials(Credentials credentials) {
+        return authenticate(credentials);
+    }
+
+    @Override
+    public List<Integer> GetFriends(int id) {
+        Customer customer = customers.get(id);
         if (customer != null) {
-            List<String> friends = customer.getFriends();
+            List<Integer> friends = customer.getFriends();
             return friends != null ? friends : new ArrayList<>();
         } else {
             // Handle the case where the customer is not found
@@ -81,5 +85,20 @@ public class CustomerRepository implements ICustomerRepository {
         }
     }
 
+    @Override
+    public Customer authenticate(Credentials credentials) {
+        for (Customer customer: customers.values()) {
+            Credentials customerCredentials = customer.getCredentials();
+
+            boolean isRightEmail = customerCredentials.getEmail().equals(credentials.getEmail());
+            boolean isRightPassword = customerCredentials.getPassword().equals(credentials.getPassword());
+
+            if (isRightEmail && isRightPassword) {
+                return customer;
+            }
+        }
+
+        return null;
+    }
 
 }

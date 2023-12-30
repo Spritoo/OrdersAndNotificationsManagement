@@ -3,8 +3,7 @@ package Assignment2.OrdersAndNotificationsManagement.controller;
 import Assignment2.OrdersAndNotificationsManagement.model.user.Credentials;
 import Assignment2.OrdersAndNotificationsManagement.model.user.Customer;
 import Assignment2.OrdersAndNotificationsManagement.model.user.UserInfo;
-import Assignment2.OrdersAndNotificationsManagement.service.CustomerService;
-import Assignment2.OrdersAndNotificationsManagement.model.Response;
+import Assignment2.OrdersAndNotificationsManagement.service.ICustomerService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -16,37 +15,37 @@ import java.util.List;
 @RequestMapping("/customer")
 public class CustomerController {
     @Autowired
-    CustomerService customerService;
+    ICustomerService ICustomerService;
 
     @PostMapping("/create")
-    public Response createAccount(@RequestBody Customer customer) {
-        Response response = new Response();
-        if (customerService.createAccount(customer)) {
-            response.setStatus(true);
-            response.setMessage("account added");
+    public ResponseEntity<String> createAccount(@RequestBody Customer customer) {
+        ResponseEntity<String> response;
+
+        if (ICustomerService.createAccount(customer)) {
+            response = ResponseEntity.ok("Account created successfully");
         } else {
-            response.setStatus(false);
-            response.setMessage("error making account");
+            response = ResponseEntity.status(HttpStatus.CONFLICT).body("Account already exists");
         }
+
         return response;
     }
 
     @PostMapping("/addFriend/{friend}")
-    public Response addFriend(@RequestBody Credentials credentials, @PathVariable("friend") String friend) {
-        Response response = new Response();
-        if (customerService.addFriend(credentials, friend)) {
-            response.setStatus(true);
-            response.setMessage("Friend added successfully");
+    public ResponseEntity<String> addFriend(@RequestBody Credentials credentials, @PathVariable("friend") int friend) {
+        ResponseEntity<String> response;
+
+        if (ICustomerService.addFriend(credentials, friend)) {
+            response = ResponseEntity.ok("Friend added successfully");
         } else {
-            response.setStatus(false);
-            response.setMessage("Failed to add friend");
+            response = ResponseEntity.internalServerError().body("Failed to add friend");
         }
+
         return response;
     }
 
     @GetMapping("/listfriends/{email}")
-    public ResponseEntity<List<String>> listfriends(@PathVariable String email) {
-        List<String> friends = customerService.listFriends(email);
+    public ResponseEntity<List<Integer>> listFriends(@PathVariable int id) {
+        List<Integer> friends = ICustomerService.listFriends(id);
 
         if (friends == null || friends.isEmpty()) {
             return new ResponseEntity<>(HttpStatus.NO_CONTENT);
@@ -55,11 +54,10 @@ public class CustomerController {
         return new ResponseEntity<>(friends, HttpStatus.OK);
     }
 
-
-
     @GetMapping("/check")
     public ResponseEntity<UserInfo> getInfo(@RequestBody Credentials credentials) {
-        UserInfo userInfo = customerService.getCustomerInfo(credentials);
+        UserInfo userInfo = ICustomerService.getCustomerInfo(credentials);
+
         if (userInfo != null) {
             return new ResponseEntity<>(userInfo, HttpStatus.OK);
         } else {

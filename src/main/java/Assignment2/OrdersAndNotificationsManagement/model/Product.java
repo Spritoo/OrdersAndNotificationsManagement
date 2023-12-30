@@ -58,6 +58,9 @@ public class Product {
     public int getCount() {
         return Count;
     }
+    public void decrementCount() {
+        Count--;
+    }
     public int getSerialNumber() {
         return SerialNumber;
     }

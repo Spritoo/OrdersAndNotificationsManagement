@@ -8,19 +8,20 @@ import org.springframework.stereotype.Service;
 import java.util.List;
 @Service
 public class ProductServiceImpl implements ProductService {
-    private IProductRepository productRepository;
+    private IProductRepository productRepository = ProductRepository.getInstance();
 
-    ProductServiceImpl() {
-        productRepository = ProductRepository.getInstance();
+    public ProductServiceImpl() {
+        addProducts();
     }
 
     @Override
     public List<Product> listAllProductsForCustomer() {
         List<Product> products = List.of(productRepository.getProducts());
+
         return products;
     }
 
-    public boolean addproducts() { // to test it but how to run this I don't know
+    public void addProducts() {
         productRepository.addProduct(new Product(1101,"shampo","koria","healthCare",12.5,10));
         productRepository.addProduct(new Product(1102,"pizza","china","food",5.25,30));
         productRepository.addProduct(new Product(1103,"Iphone25","apple","games",600,3));
@@ -34,7 +35,5 @@ public class ProductServiceImpl implements ProductService {
         productRepository.addProduct(new Product(1111, "frozen berries", "Canada", "food", 6.50, 15));
         productRepository.addProduct(new Product(1112, "gaming laptop", "Taiwan", "electronics", 1200, 5));
         productRepository.addProduct(new Product(1113, "sunscreen", "Australia", "healthCare", 8.99, 20));
-
-        return true;
     }
 }

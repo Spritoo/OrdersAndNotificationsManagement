@@ -17,13 +17,10 @@ import java.util.List;
 public class ProductController {
     @Autowired
     ProductService productService;
+
     @GetMapping("/list")
     public ResponseEntity<List<Product>> listAllProductsForCustomer() {
         List<Product> products = productService.listAllProductsForCustomer();
         return new ResponseEntity<>(products, HttpStatus.OK);
-    }
-    @PostMapping("/add")
-    public boolean addlistproducts(){
-        return productService.addproducts();
     }
 }
