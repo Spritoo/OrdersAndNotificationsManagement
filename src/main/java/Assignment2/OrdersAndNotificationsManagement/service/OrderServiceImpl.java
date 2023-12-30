@@ -8,6 +8,7 @@ import Assignment2.OrdersAndNotificationsManagement.repository.CustomerRepositor
 import Assignment2.OrdersAndNotificationsManagement.model.user.Credentials;
 import Assignment2.OrdersAndNotificationsManagement.repository.ProductRepository;
 
+import java.util.List;
 import java.util.Vector;
 
 public class OrderServiceImpl implements OrderService{
@@ -40,5 +41,15 @@ public class OrderServiceImpl implements OrderService{
         }
 
         return false;
+    }
+
+    @Override
+    public List<IOrder> getorderById(int id) {
+        return null;
+    }
+
+    @Override
+    public List<IOrder> getAllOrders() {
+        return null;
     }
 }
