@@ -1,5 +1,6 @@
 package Assignment2.OrdersAndNotificationsManagement.repository;
 
+import Assignment2.OrdersAndNotificationsManagement.model.user.Credentials;
 import Assignment2.OrdersAndNotificationsManagement.model.user.Customer;
 import Assignment2.OrdersAndNotificationsManagement.model.user.UserInfo;
 
@@ -56,10 +57,10 @@ public class CustomerRepository implements ICustomerRepository {
     }
 
     @Override
-    public UserInfo getCustomerInfo(String email, String password) {
-        if(customers.containsKey(email)){
-            if(password.equals( customers.get(email).getCredentials().getPassword()))
-                return customers.get(email).getUserInfo();
+    public UserInfo getCustomerInfo(Credentials credentials) {
+        if(customers.containsKey(credentials.getEmail())){
+            if(credentials.getPassword().equals( customers.get(credentials.getEmail()).getCredentials().getPassword()))
+                return customers.get(credentials.getEmail()).getUserInfo();
 
         }
         return null;

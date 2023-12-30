@@ -1,5 +1,6 @@
 package Assignment2.OrdersAndNotificationsManagement.repository;
 
+import Assignment2.OrdersAndNotificationsManagement.model.user.Credentials;
 import Assignment2.OrdersAndNotificationsManagement.model.user.Customer;
 import Assignment2.OrdersAndNotificationsManagement.model.user.UserInfo;
 
@@ -12,6 +13,6 @@ public interface ICustomerRepository {
     public void updateBalance(Customer costumer, Double balance);
     public boolean addfriend(String me, String friend);
     public Customer getCustomer(String email);
-    public UserInfo getCustomerInfo(String email, String password);
+    public UserInfo getCustomerInfo(Credentials credentials);
     public List<String> GetFriends(String email);
 }

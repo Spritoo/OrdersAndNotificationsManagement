@@ -2,21 +2,22 @@ package Assignment2.OrdersAndNotificationsManagement.model.order;
 
 import Assignment2.OrdersAndNotificationsManagement.model.user.Customer;
 import Assignment2.OrdersAndNotificationsManagement.model.Product;
+import Assignment2.OrdersAndNotificationsManagement.repository.IProductRepository;
 
 import java.util.List;
 
 public class SimpleOrder implements IOrder{
-    List<Product> productList;
-    public int OrderID;
-    String simpleOrderOwner;
+    private List<Product> productList;
+    private int OrderID;
+    private String simpleOrderOwner;
+    private IProductRepository  productRepository;
     SimpleOrder(String costumer){
-
         simpleOrderOwner = costumer;
     }
 
-    public void addProduct(Product product){
-
-        productList.add(product);
+    public void addProduct(int productID){
+        productRepository.updateCount(productRepository.getProductCount(productID)-1,productID);
+        productList.add(productRepository.getProduct(productID));
     }
 
     public List<Product> getInfo(){

@@ -5,6 +5,8 @@ import Assignment2.OrdersAndNotificationsManagement.model.user.Credentials;
 import Assignment2.OrdersAndNotificationsManagement.model.user.Customer;
 import Assignment2.OrdersAndNotificationsManagement.model.user.UserInfo;
 import Assignment2.OrdersAndNotificationsManagement.repository.ICustomerRepository;
+import Assignment2.OrdersAndNotificationsManagement.repository.IProductRepository;
+import Assignment2.OrdersAndNotificationsManagement.repository.ProductRepository;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -12,6 +14,7 @@ import java.util.List;
 @Service
 public class CustomerServiceImpl implements CustomerService{
     private final ICustomerRepository customerRepository = CustomerRepository.getInstance();
+    private final IProductRepository productRepository = ProductRepository.getInstance();
 
     @Override
     public boolean createAccount(Customer customer) {
@@ -36,7 +39,19 @@ public class CustomerServiceImpl implements CustomerService{
     }
 
     @Override
-    public UserInfo getCustomerInfo(String email, String password) {
-        return customerRepository.getCustomerInfo(email,password);
+    public UserInfo getCustomerInfo(Credentials credentials) {
+        return customerRepository.getCustomerInfo(credentials);
+    }
+    @Override
+    public boolean addProductToOrder(Credentials credentials, int  productID){
+        Customer customer = customerRepository.getCustomer(credentials.getEmail());
+        if(customer != null && productRepository.checkCount(1,productID)) {
+            customer.addProductToOrder(productID);
+        }
+        return true;
+    }
+    public boolean addFriendsOrderToMyOrder(Credentials credentials,String friendMail){
+        Customer customer = customerRepository.getCustomer(credentials.getEmail());
+        if(customer != null && )
     }
 }

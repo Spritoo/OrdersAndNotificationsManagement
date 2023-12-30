@@ -16,6 +16,8 @@ public interface CustomerService {
 
     public boolean addFriend(Credentials credentials, String friendId) ;
 
-    public UserInfo getCustomerInfo(String email, String password);
+    public UserInfo getCustomerInfo(Credentials credentials);
+
+    public boolean addProductToOrder(Credentials credentials, int productID);
 
 }

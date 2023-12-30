@@ -9,9 +9,13 @@ public class CompoundOrder implements IOrder {
     public int OrderID;
     List<IOrder> orders; //can be either simple order or compound orders
     public String OrderOwner;
+    public CompoundOrder(String orderOwner){
+        orders = new ArrayList<>();
+        SimpleOrder order= new SimpleOrder(orderOwner);
+        orders.add(order);
+    }
+    public CompoundOrder() {
 
-    public CompoundOrder(List<IOrder> orders) {
-        this.orders = orders;
     }
     public List<IOrder> getOrders() {
         return orders;
@@ -37,6 +41,15 @@ public class CompoundOrder implements IOrder {
         }
 
         return products;
+    }
+    public void addProduct(int productID,String orderOwner){
+        for (IOrder order:orders) {
+            if(order instanceof SimpleOrder){
+                if(order.getOwner() == orderOwner){
+                    ((SimpleOrder) order).addProduct(productID);
+                }
+            }
+        }
     }
 
     @Override

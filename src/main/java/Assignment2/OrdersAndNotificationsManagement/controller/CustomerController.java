@@ -59,7 +59,7 @@ public class CustomerController {
 
     @GetMapping("/check")
     public ResponseEntity<UserInfo> getInfo(@RequestBody Credentials credentials) {
-        UserInfo userInfo = customerService.getCustomerInfo(credentials.getEmail(), credentials.getPassword());
+        UserInfo userInfo = customerService.getCustomerInfo(credentials);
         if (userInfo != null) {
             return new ResponseEntity<>(userInfo, HttpStatus.OK);
         } else {

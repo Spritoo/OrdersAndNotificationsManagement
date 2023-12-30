@@ -1,5 +1,6 @@
 package Assignment2.OrdersAndNotificationsManagement.model.user;
 
+import Assignment2.OrdersAndNotificationsManagement.model.order.CompoundOrder;
 import Assignment2.OrdersAndNotificationsManagement.model.order.IOrder;
 
 import java.util.ArrayList;
@@ -9,12 +10,12 @@ public class Customer {
     private Credentials credentials;
     private UserInfo userInfo;
     private List<String> friends;
-    private List<IOrder> orders;
+    private CompoundOrder order;
     public Customer(Credentials credentials,UserInfo info) {
         this.credentials = credentials;
         this.userInfo = info;
         friends = new ArrayList<>();
-        orders = new ArrayList<>();
+        order = new CompoundOrder(userInfo.getEmail());
     }
 
     public Credentials getCredentials() {
@@ -38,12 +39,12 @@ public class Customer {
     }
 
 
-    public List<IOrder> getOrders() {
-        return orders;
+    public IOrder getOrders() {
+        return order;
     }
 
-    public void setOrders(List<IOrder> orders) {
-        this.orders = orders;
+    public void addProductToOrder(int productID){
+        order.addProduct(productID,userInfo.getEmail());
     }
 
     public void addFriend(String friend){
