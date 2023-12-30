@@ -1,6 +1,7 @@
 package Assignment2.OrdersAndNotificationsManagement.service;
 
 import Assignment2.OrdersAndNotificationsManagement.model.Product;
+import Assignment2.OrdersAndNotificationsManagement.model.order.CompoundOrder;
 import Assignment2.OrdersAndNotificationsManagement.model.order.IOrder;
 import Assignment2.OrdersAndNotificationsManagement.model.order.SimpleOrder;
 import Assignment2.OrdersAndNotificationsManagement.model.user.Customer;
@@ -39,8 +40,12 @@ public class OrderServiceImpl implements OrderService{
                 order.
             }
         }
+        else
+        {
+            CompoundOrder order = new CompoundOrder();
 
-        return false;
+        }
+
     }
 
     @Override
