@@ -4,6 +4,7 @@ import Assignment2.OrdersAndNotificationsManagement.model.Product;
 import Assignment2.OrdersAndNotificationsManagement.model.user.Customer;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
@@ -45,7 +46,7 @@ public class CompoundOrder extends Order {
 
     @Override
     public Map<Integer, List<Integer>> getOrderData() {
-        Map<Integer, List<Integer>> data = null;
+        Map<Integer, List<Integer>> data = new HashMap<>();
 
         for(Order order : orders) {
             data.putAll(getOrderData());

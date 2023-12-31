@@ -4,6 +4,7 @@ import Assignment2.OrdersAndNotificationsManagement.model.Product;
 import Assignment2.OrdersAndNotificationsManagement.model.user.Customer;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
@@ -53,10 +54,10 @@ public class SimpleOrder extends Order {
 
     @Override
     public Map<Integer, List<Integer>> getOrderData() {
-        Map<Integer, List<Integer>> data = null;
+        Map<Integer, List<Integer>> data = new HashMap<>();
         int cutomerId = getOwner().getId();
         List<Product> products = getProducts();
-        List<Integer> productsId = null;
+        List<Integer> productsId = new ArrayList<>();
 
         for(Product product : products)
             productsId.add(product.getSerialNumber());

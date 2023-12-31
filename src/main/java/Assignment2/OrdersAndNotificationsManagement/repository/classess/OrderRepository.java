@@ -60,7 +60,7 @@ public class OrderRepository implements IOrderRepository {
     @Override
     public List<Integer> getOrderProducts(int orderId) {
         List<Product> orderProducts = orders.get(orderId).getProducts();
-        List<Integer> productsID = null;
+        List<Integer> productsID = new ArrayList<>();
 
         for( Product product : orderProducts )
             productsID.add(product.getSerialNumber());
@@ -70,7 +70,7 @@ public class OrderRepository implements IOrderRepository {
 
     @Override
     public Map<Integer,List<Integer>> getCustomersWithProducts(int orderId) {
-        Map<Integer,List<Integer>> orderInfo = null;
+        Map<Integer,List<Integer>> orderInfo = new HashMap<>();
         Order order = orders.get(orderId);
 
         orderInfo.putAll(order.getOrderData());
