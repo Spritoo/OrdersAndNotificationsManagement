@@ -88,12 +88,15 @@ public class CustomerController {
         }
     }
 
-    @PutMapping("/balance")
-    public ResponseEntity<String> updateCustomerBalance(@RequestBody AuthenticatedRequest<Double> request) {
+    @PutMapping("/{id}/balance")
+    public ResponseEntity<String> updateCustomerBalance(
+            @RequestBody AuthenticatedRequest<Double> request,
+            @PathVariable("id") int id
+    ) {
         Customer customer = customerService.authenticate(request.getCredentials());
         double balance = request.getPayload();
 
-        if (customer == null) {
+        if (customer == null || customer.getId() != id) {
             return ResponseEntity.status(HttpStatus.UNAUTHORIZED).build();
         }
 
