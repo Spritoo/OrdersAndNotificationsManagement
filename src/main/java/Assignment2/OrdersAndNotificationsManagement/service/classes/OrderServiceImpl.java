@@ -66,7 +66,7 @@ public class OrderServiceImpl implements IOrderService {
             return CancellationStatus.OrderNotFound;
         }
 
-        Date creationDate = order.getCreationDate();
+        Date creationDate = order.getShippingDate();
         Date currentDate = new Date();
 
         // get difference in days between two dates
@@ -137,6 +137,9 @@ public class OrderServiceImpl implements IOrderService {
             return ShipmentStatus.ShipmentNotFound;
         }
 
+        Date currentDate = new Date();
+        order.setShippingDate(currentDate);
+
         return ShipmentStatus.Success;
     }
 
@@ -147,7 +150,7 @@ public class OrderServiceImpl implements IOrderService {
             return ShipmentStatus.ShipmentNotFound;
         }
 
-        Date creationDate = order.getCreationDate();
+        Date creationDate = order.getShippingDate();
         Date currentDate = new Date();
 
         // get difference in days between two dates
