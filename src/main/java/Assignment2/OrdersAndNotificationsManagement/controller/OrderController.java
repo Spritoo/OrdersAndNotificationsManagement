@@ -72,6 +72,7 @@ public class OrderController {
         return ResponseEntity.ok(new OrderDTO(order));
     }
 
+    // POST /orders/{orderId}/products/{productId}
     @PostMapping("/{orderId}/products/{productId}")
     ResponseEntity<String> addProductToOrder(
             @PathVariable("orderId") int orderId,
@@ -108,6 +109,7 @@ public class OrderController {
         };
     }
 
+    // POST /order/{parentOrderId}/orders/{childOrderId}
     @PostMapping("/{parentOrderId}/orders/{childOrderId}")
     ResponseEntity<String> addOrderToOrder(
             @PathVariable("parentOrderId") int parentOrderId,
@@ -146,8 +148,8 @@ public class OrderController {
         };
     }
 
-    // DELETE /orders/{id}
-    @DeleteMapping("/{id}")
+    // DELETE /orders/cancel/{id}
+    @DeleteMapping("cancel/{id}")
     ResponseEntity<String> cancelOrder(
             @PathVariable("id") int orderId,
             @RequestBody AuthenticatedRequest<Void> request
@@ -180,48 +182,54 @@ public class OrderController {
     }
 
     // todo: this
-    // DELETE /orders/{id}/shipment
-    /*
-    @DeleteMapping("/{id}/shipment")
-    Response cancelShipment(@PathVariable("id") int id) {
-        Response response = new Response();
-        IOrderService.CancellationStatus status = orderService.cancelShipment(id);
+    // DELETE /orders/cancel/{id}/shipment
+    @DeleteMapping("/cancel/{id}/shipment")
+    ResponseEntity<String> cancelShipment(@PathVariable("id") int id) {
+        Order order = orderService.getOrder(id);
 
-        if (status == IOrderService.CancellationStatus.Success) {
-            response.setStatus(true);
-            response.setMessage("Shipment cancelled successfully");
-        } else {
-            response.setStatus(false);
-
-            if (status == IOrderService.CancellationStatus.OrderNotFound) {
-                response.setMessage("Order not found");
-            } else if (status == IOrderService.CancellationStatus.OrderNotCancellable) {
-                response.setMessage("The cancellation period for this shipment has expired");
-            }
+        if (order == null) {
+            return ResponseEntity.status(HttpStatus.NOT_FOUND).body("Order not found");
         }
 
-        return response;
+        IOrderService.ShipmentStatus status = orderService.cancelShipment(id);
+
+        if(status == IOrderService.ShipmentStatus.Success) {
+            customerService.returnShipmentFees(orderService.getOrderData(id));
+            orderService.cancelShipment(id);
+        }
+        else {
+            status = IOrderService.ShipmentStatus.ShipmentNotCancellable;
+        }
+
+        return switch (status) {
+            case Success -> ResponseEntity.ok("Shipment cancelled successfully");
+            case ShipmentNotCancellable -> ResponseEntity.status(403).body("Shipment can not be cancelled");
+            default -> null;
+        };
     }
 
+    // POST /orders/{id}/shipment
     @PostMapping("/{id}/shipment")
-    Response shipOrder(@PathVariable("id") int id) {
-        Response response = new Response();
+    ResponseEntity<String> shipOrder(@PathVariable("id") int id) {
+        Order order = orderService.getOrder(id);
+
+        if (order == null) {
+            return ResponseEntity.status(HttpStatus.NOT_FOUND).body("Order not found");
+        }
+
         IOrderService.ShipmentStatus status = orderService.shipOrder(id);
 
-        if (status == IOrderService.ShipmentStatus.Success) {
-            response.setStatus(true);
-            response.setMessage("Order shipped successfully");
-        } else {
-            response.setStatus(false);
 
-            if (status == IOrderService.ShipmentStatus.OrderNotFound) {
-                response.setMessage("Order not found");
-            } else if (status == IOrderService.ShipmentStatus.OrderNotShippable) {
-                response.setMessage("Order is not shippable");
-            }
+        if(!customerService.decductShipmentFees(orderService.getOrderData(id))) {
+            status = IOrderService.ShipmentStatus.ShipmentCancelled;
         }
 
-        return response;
+
+        return switch (status) {
+            case Success -> ResponseEntity.status(HttpStatus.OK).body("Order shipped successfully");
+            case ShipmentNotFound -> ResponseEntity.status(404).body("Order not found");
+            case ShipmentCancelled -> ResponseEntity.status(403).body("A customer does not have balance for shipment");
+            default -> null;
+        };
     }
-    */
 }

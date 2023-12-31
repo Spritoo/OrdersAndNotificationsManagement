@@ -27,6 +27,13 @@ public interface IOrderService {
         OrderAlreadyContainsOrder,
     }
 
+    public enum ShipmentStatus {
+        Success,
+        ShipmentNotFound,
+        ShipmentNotCancellable,
+        ShipmentCancelled
+    }
+
     SimpleOrder createSimpleOrder(Customer owner);
     CompoundOrder createCompoundOrder(Customer owner, List<Integer> orderIds);
     Order getOrder(int orderId);
@@ -35,4 +42,6 @@ public interface IOrderService {
     EditStatus addProductToOrder(int order, int productId);
     EditStatus addOrderToOrder(int parentOrderId, int childOrderId);
     public Map<Integer, List<Integer>> getOrderData(int orderID);
+    public ShipmentStatus shipOrder(int orderId);
+    public ShipmentStatus cancelShipment(int orderId);
 }

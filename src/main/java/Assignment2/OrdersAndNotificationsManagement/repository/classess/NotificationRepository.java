@@ -27,6 +27,8 @@ public class NotificationRepository implements INotificationRepository {
     }
 
     public Notification popFront() {
-        return queue.removeFirst();
+        Notification notification = queue.get(0);
+        queue.remove(0);
+        return notification;
     }
 }

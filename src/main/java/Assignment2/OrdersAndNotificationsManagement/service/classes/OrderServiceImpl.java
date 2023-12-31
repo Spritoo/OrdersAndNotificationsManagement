@@ -130,6 +130,36 @@ public class OrderServiceImpl implements IOrderService {
         return EditStatus.Success;
     }
 
+    public ShipmentStatus shipOrder(int orderId) {
+        Order order = getOrder(orderId);
+
+        if (order == null) {
+            return ShipmentStatus.ShipmentNotFound;
+        }
+
+        return ShipmentStatus.Success;
+    }
+
+    public ShipmentStatus cancelShipment(int orderId) {
+        Order order = getOrder(orderId);
+
+        if (order == null) {
+            return ShipmentStatus.ShipmentNotFound;
+        }
+
+        Date creationDate = order.getCreationDate();
+        Date currentDate = new Date();
+
+        // get difference in days between two dates
+        long diffInDays = ChronoUnit.DAYS.between(creationDate.toInstant(), currentDate.toInstant());
+
+        if (diffInDays > MAX_ORDER_CANCEL_TIME_IN_DAYS) {
+            return ShipmentStatus.ShipmentNotCancellable;
+        }
+
+        return ShipmentStatus.Success;
+    }
+
     @Override
     public Map<Integer, List<Integer>> getOrderData(int orderID) {
         return orderRepository.getOrder(orderID).getOrderData();

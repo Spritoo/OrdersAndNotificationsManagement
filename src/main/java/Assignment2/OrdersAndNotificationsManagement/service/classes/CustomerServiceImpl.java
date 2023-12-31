@@ -90,4 +90,45 @@ public class CustomerServiceImpl implements ICustomerService {
     public boolean isFriends(int id, int friend) {
         return customerRepository.isFriends(id, friend);
     }
+
+    @Override
+    public boolean decductShipmentFees(Map<Integer, List<Integer>> customerAndProducts) {
+        int counter = 0;
+        double shippingFees = 5;
+
+        for (Map.Entry<Integer, List<Integer>> entry : customerAndProducts.entrySet()) {
+            int customerID = entry.getKey();
+            counter++;
+        }
+
+        for (Map.Entry<Integer, List<Integer>> entry : customerAndProducts.entrySet()) {
+            int customerID = entry.getKey();
+
+            if(customerRepository.getCustomerById(customerID).getUserInfo().getBalance() < shippingFees/counter)
+                return false;
+
+
+            double customerBalance = customerRepository.getCustomerById(customerID).getUserInfo().getBalance();
+            customerRepository.getCustomerById(customerID).getUserInfo().setBalance(customerBalance - (shippingFees/counter));
+        }
+
+        return true;
+    }
+
+    @Override
+    public void returnShipmentFees(Map<Integer, List<Integer>> customerAndProducts) {
+        int counter = 0;
+        double shippingFees = 5;
+
+        for (Map.Entry<Integer, List<Integer>> entry : customerAndProducts.entrySet()) {
+            int customerID = entry.getKey();
+            counter++;
+        }
+
+        for (Map.Entry<Integer, List<Integer>> entry : customerAndProducts.entrySet()) {
+            int customerID = entry.getKey();
+            double customerBalance = customerRepository.getCustomerById(customerID).getUserInfo().getBalance();
+            customerRepository.getCustomerById(customerID).getUserInfo().setBalance(customerBalance + (shippingFees*counter));
+        }
+    }
 }

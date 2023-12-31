@@ -17,4 +17,6 @@ public interface ICustomerService {
     public boolean correctBalance(Credentials credentials, int productID);
     public void returnBalanceAfterCancellation(Map<Integer, List<Integer>> customerAndProducts);
     public boolean isFriends(int id, int friend);
+    public void returnShipmentFees(Map<Integer, List<Integer>> customerAndProducts);
+    public boolean decductShipmentFees(Map<Integer, List<Integer>> customerAndProducts);
 }
