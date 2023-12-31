@@ -1,4 +1,4 @@
-package Assignment2.OrdersAndNotificationsManagement.service;
+package Assignment2.OrdersAndNotificationsManagement.service.interfaces;
 
 import Assignment2.OrdersAndNotificationsManagement.model.user.Credentials;
 import Assignment2.OrdersAndNotificationsManagement.model.user.Customer;

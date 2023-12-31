@@ -1,11 +1,9 @@
-package Assignment2.OrdersAndNotificationsManagement.repository;
+package Assignment2.OrdersAndNotificationsManagement.repository.classess;
 
 import Assignment2.OrdersAndNotificationsManagement.model.notification.Notification;
-import Assignment2.OrdersAndNotificationsManagement.model.notification.NotificationTemplate;
+import Assignment2.OrdersAndNotificationsManagement.repository.interfaces.INotificationRepository;
 
-import java.util.HashMap;
 import java.util.List;
-import java.util.Map;
 
 public class NotificationRepository implements INotificationRepository {
     private static NotificationRepository instance;

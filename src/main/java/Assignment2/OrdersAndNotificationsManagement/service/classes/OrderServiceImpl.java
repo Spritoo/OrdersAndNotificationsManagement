@@ -1,20 +1,20 @@
-package Assignment2.OrdersAndNotificationsManagement.service;
+package Assignment2.OrdersAndNotificationsManagement.service.classes;
 
-import Assignment2.OrdersAndNotificationsManagement.dto.OrderDTO;
 import Assignment2.OrdersAndNotificationsManagement.model.Product;
 import Assignment2.OrdersAndNotificationsManagement.model.order.CompoundOrder;
 import Assignment2.OrdersAndNotificationsManagement.model.order.Order;
 import Assignment2.OrdersAndNotificationsManagement.model.order.SimpleOrder;
 import Assignment2.OrdersAndNotificationsManagement.model.user.Customer;
-import Assignment2.OrdersAndNotificationsManagement.repository.*;
-import Assignment2.OrdersAndNotificationsManagement.model.user.Credentials;
+import Assignment2.OrdersAndNotificationsManagement.repository.classess.OrderRepository;
+import Assignment2.OrdersAndNotificationsManagement.repository.classess.ProductRepository;
+import Assignment2.OrdersAndNotificationsManagement.repository.interfaces.IOrderRepository;
+import Assignment2.OrdersAndNotificationsManagement.repository.interfaces.IProductRepository;
+import Assignment2.OrdersAndNotificationsManagement.service.interfaces.IOrderService;
 import org.springframework.stereotype.Service;
 
-import java.time.Duration;
 import java.time.temporal.ChronoUnit;
 import java.util.Date;
 import java.util.List;
-import java.util.Vector;
 
 @Service
 public class OrderServiceImpl implements IOrderService {

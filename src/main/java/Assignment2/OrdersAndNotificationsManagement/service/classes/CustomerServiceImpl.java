@@ -1,12 +1,13 @@
-package Assignment2.OrdersAndNotificationsManagement.service;
+package Assignment2.OrdersAndNotificationsManagement.service.classes;
 
-import Assignment2.OrdersAndNotificationsManagement.repository.CustomerRepository;
+import Assignment2.OrdersAndNotificationsManagement.repository.classess.CustomerRepository;
 import Assignment2.OrdersAndNotificationsManagement.model.user.Credentials;
 import Assignment2.OrdersAndNotificationsManagement.model.user.Customer;
 import Assignment2.OrdersAndNotificationsManagement.model.user.UserInfo;
-import Assignment2.OrdersAndNotificationsManagement.repository.ICustomerRepository;
-import Assignment2.OrdersAndNotificationsManagement.repository.IProductRepository;
-import Assignment2.OrdersAndNotificationsManagement.repository.ProductRepository;
+import Assignment2.OrdersAndNotificationsManagement.repository.interfaces.ICustomerRepository;
+import Assignment2.OrdersAndNotificationsManagement.repository.interfaces.IProductRepository;
+import Assignment2.OrdersAndNotificationsManagement.repository.classess.ProductRepository;
+import Assignment2.OrdersAndNotificationsManagement.service.interfaces.ICustomerService;
 import org.springframework.stereotype.Service;
 
 import java.util.List;

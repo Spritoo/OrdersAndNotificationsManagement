@@ -1,4 +1,4 @@
-package Assignment2.OrdersAndNotificationsManagement.repository;
+package Assignment2.OrdersAndNotificationsManagement.repository.interfaces;
 
 import Assignment2.OrdersAndNotificationsManagement.model.order.Order;
 

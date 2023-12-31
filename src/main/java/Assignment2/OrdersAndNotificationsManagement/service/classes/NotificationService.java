@@ -1,14 +1,10 @@
-package Assignment2.OrdersAndNotificationsManagement.service;
+package Assignment2.OrdersAndNotificationsManagement.service.classes;
 
 import Assignment2.OrdersAndNotificationsManagement.model.notification.Notification;
-import Assignment2.OrdersAndNotificationsManagement.repository.INotificationRepository;
-import Assignment2.OrdersAndNotificationsManagement.repository.NotificationRepository;
+import Assignment2.OrdersAndNotificationsManagement.repository.interfaces.INotificationRepository;
+import Assignment2.OrdersAndNotificationsManagement.repository.classess.NotificationRepository;
 import org.springframework.scheduling.annotation.Scheduled;
 import org.springframework.stereotype.Service;
-
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Timer;
 
 @Service
 public class NotificationService {

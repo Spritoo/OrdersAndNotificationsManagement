@@ -1,8 +1,9 @@
-package Assignment2.OrdersAndNotificationsManagement.repository;
+package Assignment2.OrdersAndNotificationsManagement.repository.classess;
 
 import Assignment2.OrdersAndNotificationsManagement.model.user.Credentials;
 import Assignment2.OrdersAndNotificationsManagement.model.user.Customer;
 import Assignment2.OrdersAndNotificationsManagement.model.user.UserInfo;
+import Assignment2.OrdersAndNotificationsManagement.repository.interfaces.ICustomerRepository;
 
 import java.util.ArrayList;
 import java.util.HashMap;

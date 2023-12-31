@@ -1,10 +1,11 @@
-package Assignment2.OrdersAndNotificationsManagement.repository;
+package Assignment2.OrdersAndNotificationsManagement.repository.classess;
 
 import Assignment2.OrdersAndNotificationsManagement.model.order.Order;
+import Assignment2.OrdersAndNotificationsManagement.repository.interfaces.IOrderRepository;
 
 import java.util.*;
 
-public class OrderRepository implements IOrderRepository{
+public class OrderRepository implements IOrderRepository {
     private static OrderRepository instance = null;
     private final Map<Integer, Order> orders = new HashMap<>();
     private int nextId = 1;

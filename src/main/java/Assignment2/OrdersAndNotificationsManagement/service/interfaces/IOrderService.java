@@ -1,4 +1,4 @@
-package Assignment2.OrdersAndNotificationsManagement.service;
+package Assignment2.OrdersAndNotificationsManagement.service.interfaces;
 
 import Assignment2.OrdersAndNotificationsManagement.dto.OrderDTO;
 import Assignment2.OrdersAndNotificationsManagement.model.order.CompoundOrder;

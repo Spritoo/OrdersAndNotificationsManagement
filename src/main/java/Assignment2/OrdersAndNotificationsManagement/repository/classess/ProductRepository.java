@@ -1,6 +1,7 @@
-package Assignment2.OrdersAndNotificationsManagement.repository;
+package Assignment2.OrdersAndNotificationsManagement.repository.classess;
 
 import Assignment2.OrdersAndNotificationsManagement.model.Product;
+import Assignment2.OrdersAndNotificationsManagement.repository.interfaces.IProductRepository;
 
 import java.util.HashMap;
 import java.util.Map;
