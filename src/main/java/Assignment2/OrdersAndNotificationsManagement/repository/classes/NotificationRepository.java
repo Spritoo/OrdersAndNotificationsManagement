@@ -3,11 +3,12 @@ package Assignment2.OrdersAndNotificationsManagement.repository.classes;
 import Assignment2.OrdersAndNotificationsManagement.model.notification.Notification;
 import Assignment2.OrdersAndNotificationsManagement.repository.interfaces.INotificationRepository;
 
+import java.util.ArrayList;
 import java.util.List;
 
 public class NotificationRepository implements INotificationRepository {
     private static NotificationRepository instance;
-    public List<Notification> queue;
+    public List<Notification> queue = new ArrayList<>();
 
     public static NotificationRepository getInstance() {
         if (instance == null) {
@@ -15,6 +16,12 @@ public class NotificationRepository implements INotificationRepository {
         }
 
         return instance;
+    }
+
+    public NotificationRepository() {
+        Notification notification = new Notification();
+
+        add(notification);
     }
 
     public void add(Notification notification) {
@@ -26,9 +33,12 @@ public class NotificationRepository implements INotificationRepository {
         return queue.isEmpty();
     }
 
-    public Notification popFront() {
-        Notification notification = queue.get(0);
-        queue.remove(0);
-        return notification;
+    @Override
+    public List<Notification> flush() {
+        List<Notification> result = new ArrayList<>(queue);
+
+        queue.clear();
+
+        return result;
     }
 }

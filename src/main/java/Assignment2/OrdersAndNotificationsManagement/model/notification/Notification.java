@@ -1,26 +1,39 @@
 package Assignment2.OrdersAndNotificationsManagement.model.notification;
 
+import Assignment2.OrdersAndNotificationsManagement.model.Language;
+
+import java.util.Map;
+
 public class Notification {
-    private String notificationId;
+    private String id;
+    private String type;
     private String recipient;
-    private NotificationTemplate template;
-    private String content;
-    private String status; //sent, pending
+    private String templateId;
+    private Map<String, String> arguments;
+    private Language language;
 
-    public Notification(String notificationId, String recipient, NotificationTemplate template, String content, String status) {
-        this.notificationId = notificationId;
+    public Notification(
+            String id,
+            String type,
+            String recipient,
+            String templateId,
+            Map<String, String> arguments,
+            Language language
+    ) {
+        this.id = id;
+        this.type = type;
         this.recipient = recipient;
-        this.template = template;
-        this.content = content;
-        this.status = status;
+        this.templateId = templateId;
+        this.arguments = arguments;
+        this.language = language;
     }
 
-    public String getNotificationId() {
-        return notificationId;
+    public String getId() {
+        return id;
     }
 
-    public void setNotificationId(String notificationId) {
-        this.notificationId = notificationId;
+    public void setId(String id) {
+        this.id = id;
     }
 
     public String getRecipient() {
@@ -31,28 +44,38 @@ public class Notification {
         this.recipient = recipient;
     }
 
-    public NotificationTemplate getTemplate() {
-        return template;
+    public String getTemplateId() {
+        return templateId;
     }
 
-    public void setTemplate(NotificationTemplate template) {
-        this.template = template;
+    public void setTemplateId(String template) {
+        this.templateId = template;
     }
 
-    public String getContent() {
-        return content;
+    public Map<String, String> getArguments() {
+        return arguments;
     }
 
-    public void setContent(String content) {
-        this.content = content;
+    public void setArguments(Map<String, String> arguments) {
+        this.arguments = arguments;
     }
 
+    public Language getLanguage() {
+        return language;
+    }
+
+    public void setLanguage(Language language) {
+        this.language = language;
+    }
+
+    @Override
     public String toString() {
         return "Notification{" +
-                "notificationId='" + notificationId + '\'' +
+                "id='" + id + '\'' +
                 ", recipient='" + recipient + '\'' +
-                ", template='" + template + '\'' +
-                ", content='" + content + '\'' +
+                ", templateId='" + templateId + '\'' +
+                ", arguments=" + arguments +
+                ", language=" + language +
                 '}';
     }
 }

@@ -24,10 +24,6 @@ public class NotificationTemplateRepository implements INotificationTemplateRepo
         populate();
     }
 
-    private void addTemplate(NotificationTemplate template) {
-        templates.put(template.getTemplateId(), template);
-    }
-
     private void populate() {
         addTemplate(new NotificationTemplate(
                 "ORDER_PLACED",
@@ -42,6 +38,10 @@ public class NotificationTemplateRepository implements INotificationTemplateRepo
                 "Dear {firstName}, your order [{orderId}] has been shipped.",
                 new Language[]{Language.English, Language.Arabic}
         ));
+    }
+
+    private void addTemplate(NotificationTemplate template) {
+        templates.put(template.getTemplateId(), template);
     }
 
     @Override

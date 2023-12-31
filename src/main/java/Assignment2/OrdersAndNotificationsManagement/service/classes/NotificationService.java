@@ -1,10 +1,16 @@
 package Assignment2.OrdersAndNotificationsManagement.service.classes;
 
+import Assignment2.OrdersAndNotificationsManagement.dispatcher.EmailNotificationDispatcher;
+import Assignment2.OrdersAndNotificationsManagement.dispatcher.INotificationDispatcher;
+import Assignment2.OrdersAndNotificationsManagement.dispatcher.SMSNotificationDispatcher;
 import Assignment2.OrdersAndNotificationsManagement.model.notification.Notification;
+import Assignment2.OrdersAndNotificationsManagement.model.notification.NotificationTemplate;
 import Assignment2.OrdersAndNotificationsManagement.repository.interfaces.INotificationRepository;
 import Assignment2.OrdersAndNotificationsManagement.repository.classes.NotificationRepository;
 import org.springframework.scheduling.annotation.Scheduled;
 import org.springframework.stereotype.Service;
+
+import java.util.List;
 
 @Service
 public class NotificationService {
@@ -16,14 +22,25 @@ public class NotificationService {
         notificationRepository.add(notification);
     }
 
+    private INotificationDispatcher createNotificationDispatcher(String type) {
+        return switch (type) {
+            case "email" -> new EmailNotificationDispatcher();
+            case "sms" -> new SMSNotificationDispatcher();
+            default -> null;
+        };
+    }
+
     @Scheduled(fixedRate = NOTIFICATION_TIMER_RATE)
     public void dispatch() {
-        Notification notification;
+        System.out.println("Hello world!");
 
-        while (!notificationRepository.isEmpty()) {
-            notification = notificationRepository.popFront();
+        List<Notification> notifications = notificationRepository.flush();
 
-            // dispatch the notification somehow
+        for (Notification notification: notifications) {
+            String templateId = notification.getTemplateId();
+            // NotificationTemplate template = NotificationTemplateRepository.getInstance().getTemplate(templateId);
+
+            INotificationDispatcher dispatcher = createNotificationDispatcher(notification.getType());
         }
     }
 }
