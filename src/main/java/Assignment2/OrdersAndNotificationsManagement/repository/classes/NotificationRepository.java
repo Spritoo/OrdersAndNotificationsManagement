@@ -18,14 +18,12 @@ public class NotificationRepository implements INotificationRepository {
         return instance;
     }
 
-    public NotificationRepository() {
-        Notification notification = new Notification();
-
-        add(notification);
-    }
-
     public void add(Notification notification) {
         queue.add(notification);
+    }
+
+    public List<Notification> getAll() {
+        return queue;
     }
 
     @Override

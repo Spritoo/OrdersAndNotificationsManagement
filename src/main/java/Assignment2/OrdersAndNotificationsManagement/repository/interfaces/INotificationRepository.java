@@ -6,6 +6,7 @@ import java.util.List;
 
 public interface INotificationRepository {
     void add(Notification notification);
+    List<Notification> getAll();
     boolean isEmpty();
     List<Notification> flush();
 }

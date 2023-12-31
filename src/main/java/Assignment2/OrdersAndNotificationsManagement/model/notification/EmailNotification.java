@@ -9,14 +9,11 @@ public class EmailNotification extends Notification {
     private String body;
 
     public EmailNotification(
-            String id,
             String subject,
             String body,
-            String recipient,
-            Map<String, String> arguments,
-            Language language
+            String recipient
     ) {
-        super(id, recipient, arguments, language);
+        super(recipient);
 
         this.subject = subject;
         this.body = body;

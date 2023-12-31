@@ -11,13 +11,7 @@ import java.util.Map;
 // 2. instance of NotificationTemplate called orderNotificationTemplate and store it somewhere and reuse it when sending that notification type
 
 public abstract class NotificationTemplate {
-    private String templateId;
-
-    public NotificationTemplate(String templateId) {
-        this.templateId = templateId;
-    }
-
-    protected String format(String message, Map<String, String> arguments, Language language) {
+    protected String format(String message, Map<String, String> arguments) {
         for (Map.Entry<String, String> entry: arguments.entrySet()) {
             String placeholderName = entry.getKey();
             String value = entry.getValue();
@@ -28,7 +22,7 @@ public abstract class NotificationTemplate {
         return message;
     }
 
-    public abstract List<Class<?>> getAvailableChannels();
+    public abstract Class<?>[]  getAvailableChannels();
     public abstract Notification createNotification(
             Class<?> channel,
             String recipient,
@@ -36,8 +30,8 @@ public abstract class NotificationTemplate {
             Language language
     );
 
-    public String getTemplateId() {
-        return this.templateId;
+    public Class<?> getIdentifier() {
+        return this.getClass();
     }
 
     public abstract Language[] getLanguages();

@@ -2,6 +2,8 @@ package Assignment2.OrdersAndNotificationsManagement.repository.classes;
 
 import Assignment2.OrdersAndNotificationsManagement.model.Language;
 import Assignment2.OrdersAndNotificationsManagement.model.notification.template.NotificationTemplate;
+import Assignment2.OrdersAndNotificationsManagement.model.notification.template.OrderPlacedTemplate;
+import Assignment2.OrdersAndNotificationsManagement.model.notification.template.OrderShippedTemplate;
 import Assignment2.OrdersAndNotificationsManagement.repository.interfaces.INotificationTemplateRepository;
 
 import java.util.HashMap;
@@ -10,7 +12,7 @@ import java.util.Map;
 public class NotificationTemplateRepository implements INotificationTemplateRepository {
     private static NotificationTemplateRepository instance;
 
-    private final Map<String, NotificationTemplate> templates = new HashMap<>();
+    private final Map<Class<?>, NotificationTemplate> templates = new HashMap<>();
 
     public static NotificationTemplateRepository getInstance() {
         if (instance == null) {
@@ -25,27 +27,17 @@ public class NotificationTemplateRepository implements INotificationTemplateRepo
     }
 
     private void populate() {
-        addTemplate(new NotificationTemplate(
-                "ORDER_PLACED",
-                "Your order has been placed",
-                "Dear {firstName}, your order [{orderId}] is confirmed. Thanks for using our store :)",
-                new Language[]{Language.English, Language.Arabic}
-        ));
-
-        addTemplate(new NotificationTemplate(
-                "ORDER_SHIPPED",
-                "Your order has been shipped",
-                "Dear {firstName}, your order [{orderId}] has been shipped.",
-                new Language[]{Language.English, Language.Arabic}
-        ));
-    }
-
-    private void addTemplate(NotificationTemplate template) {
-        templates.put(template.getTemplateId(), template);
+        add(new OrderPlacedTemplate());
+        add(new OrderShippedTemplate());
     }
 
     @Override
-    public NotificationTemplate getTemplate(String id) {
-        return templates.get(id);
+    public void add(NotificationTemplate template) {
+        templates.put(template.getIdentifier(), template);
+    }
+
+    @Override
+    public NotificationTemplate get(Class<?> identifier) {
+        return templates.get(identifier);
     }
 }

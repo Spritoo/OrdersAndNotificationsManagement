@@ -7,17 +7,9 @@ import java.util.Map;
 public abstract class Notification {
     private String id;
     private String recipient;
-    private Map<String, String> arguments;
-    private Language language;
 
-    public Notification(
-            String recipient,
-            Map<String, String> arguments,
-            Language language
-    ) {
+    public Notification(String recipient) {
         this.recipient = recipient;
-        this.arguments = arguments;
-        this.language = language;
     }
 
     public String getId() {
@@ -34,22 +26,6 @@ public abstract class Notification {
 
     public void setRecipient(String recipient) {
         this.recipient = recipient;
-    }
-
-    public Map<String, String> getArguments() {
-        return arguments;
-    }
-
-    public void setArguments(Map<String, String> arguments) {
-        this.arguments = arguments;
-    }
-
-    public Language getLanguage() {
-        return language;
-    }
-
-    public void setLanguage(Language language) {
-        this.language = language;
     }
 
     public Class<?> getType() {

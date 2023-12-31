@@ -28,6 +28,9 @@ public class OrderController {
     @Autowired
     ICustomerService customerService;
 
+    @Autowired
+    INotificationService notificationService;
+
     // POST /orders/create/simple
     @PostMapping("/create/simple")
     ResponseEntity<OrderDTO> createSimpleOrder(@RequestBody AuthenticatedRequest<Void> request) {
@@ -226,12 +229,13 @@ public class OrderController {
             status = IOrderService.ShipmentStatus.ShipmentCancelled;
         }
 
-
         return switch (status) {
             case Success -> ResponseEntity.status(HttpStatus.OK).body("Order shipped successfully");
             case ShipmentNotFound -> ResponseEntity.status(404).body("Order not found");
             case ShipmentCancelled -> ResponseEntity.status(403).body("A customer does not have balance for shipment");
             default -> null;
         };
+
+
     }
 }

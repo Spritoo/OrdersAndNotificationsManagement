@@ -8,13 +8,10 @@ public class SMSNotification extends Notification {
     private String message;
 
     public SMSNotification(
-            String id,
             String message,
-            String recipient,
-            Map<String, String> arguments,
-            Language language
+            String recipient
     ) {
-        super(id, recipient, arguments, language);
+        super(recipient);
 
         this.message = message;
     }

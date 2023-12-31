@@ -56,7 +56,7 @@ public class NotificationService {
             return false;
         }
 
-        List<Class<?>> availableChannels = template.getAvailableChannels();
+        Class<?>[] availableChannels = template.getAvailableChannels();
         int count = 0;
 
         for (Class<?> channel: availableChannels) {
@@ -73,6 +73,10 @@ public class NotificationService {
         }
 
         return count > 0;
+    }
+
+    public List<Notification> getAll() {
+        return notificationRepository.getAll();
     }
 
     public void add(Notification notification) {
