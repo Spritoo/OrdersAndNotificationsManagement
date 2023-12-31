@@ -43,12 +43,12 @@ public class NotificationService {
     }
 
     public boolean sendNotification(
-            String templateId,
+            Class<?> templateId,
             Map<String, String> parameters,
             String recipient,
             Language language
     ) {
-        NotificationTemplate template = notificationTemplateRepository.getTemplate(templateId);
+        NotificationTemplate template = notificationTemplateRepository.get(templateId);
 
         if (template == null) {
             System.out.println("No notification template found for id " + templateId);
