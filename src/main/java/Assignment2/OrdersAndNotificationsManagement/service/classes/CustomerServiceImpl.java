@@ -94,7 +94,7 @@ public class CustomerServiceImpl implements ICustomerService {
     @Override
     public boolean decductShipmentFees(Map<Integer, List<Integer>> customerAndProducts) {
         int counter = 0;
-        double shippingFees = 5;
+        double shippingFees = 50;
 
         for (Map.Entry<Integer, List<Integer>> entry : customerAndProducts.entrySet()) {
             int customerID = entry.getKey();
@@ -118,7 +118,7 @@ public class CustomerServiceImpl implements ICustomerService {
     @Override
     public void returnShipmentFees(Map<Integer, List<Integer>> customerAndProducts) {
         int counter = 0;
-        double shippingFees = 5;
+        double shippingFees = 50;
 
         for (Map.Entry<Integer, List<Integer>> entry : customerAndProducts.entrySet()) {
             int customerID = entry.getKey();

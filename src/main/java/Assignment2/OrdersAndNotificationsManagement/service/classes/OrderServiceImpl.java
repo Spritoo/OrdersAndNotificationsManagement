@@ -28,6 +28,8 @@ public class OrderServiceImpl implements IOrderService {
     public SimpleOrder createSimpleOrder(Customer owner) {
         SimpleOrder order = new SimpleOrder(owner);
 
+        Date currentDate = new Date();
+        order.setCreationDate(currentDate);
         orderRepository.addOrder(order);
 
         return order;
@@ -42,6 +44,9 @@ public class OrderServiceImpl implements IOrderService {
         }
 
         CompoundOrder order = new CompoundOrder(owner, orders);
+
+        Date currentDate = new Date();
+        order.setCreationDate(currentDate);
 
         orderRepository.addOrder(order);
 
