@@ -1,0 +1,31 @@
+package Assignment2.OrdersAndNotificationsManagement.model.notification.template;
+
+import Assignment2.OrdersAndNotificationsManagement.model.Language;
+import Assignment2.OrdersAndNotificationsManagement.model.notification.Notification;
+import Assignment2.OrdersAndNotificationsManagement.model.notification.SMSNotification;
+
+import java.util.List;
+import java.util.Map;
+
+public class OrderShipmentCanceledTemplate extends NotificationTemplate {
+    @Override
+    public Notification createNotification(Class<?> channel, String recipient, Map<String, String> arguments, Language language) {
+        if (channel == SMSNotification.class) {
+            return new SMSNotification(
+                    format("Dear {firstName}, your order [{orderId}] has been canceled.", arguments),
+                    recipient
+            );
+        }
+
+        return null;
+    }
+
+    @Override
+    public Class<?>[] getAvailableChannels() {
+        return new Class[]{SMSNotification.class};
+    }
+
+    public Language[] getLanguages() {
+        return new Language[]{Language.English};
+    }
+}

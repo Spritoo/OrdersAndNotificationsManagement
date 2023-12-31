@@ -2,6 +2,8 @@ package Assignment2.OrdersAndNotificationsManagement.controller;
 
 import Assignment2.OrdersAndNotificationsManagement.dto.AuthenticatedRequest;
 import Assignment2.OrdersAndNotificationsManagement.dto.OrderDTO;
+import Assignment2.OrdersAndNotificationsManagement.model.Language;
+import Assignment2.OrdersAndNotificationsManagement.model.notification.template.OrderShippedTemplate;
 import Assignment2.OrdersAndNotificationsManagement.model.order.CompoundOrder;
 import Assignment2.OrdersAndNotificationsManagement.model.order.Order;
 import Assignment2.OrdersAndNotificationsManagement.model.order.SimpleOrder;
@@ -16,6 +18,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
+import java.util.Map;
 
 // todo: Abstract controller with authentication method OR use spring security OR a middleware
 // The authentication is fucked please someone come up with a better solution
@@ -207,6 +210,16 @@ public class OrderController {
             status = IOrderService.ShipmentStatus.ShipmentNotCancellable;
         }
 
+        notificationService.sendNotification(
+                OrderShipmentCanceled.class,
+                Map.ofEntries(
+                        Map.entry("orderId", Integer.toString(order.getId())),
+                        Map.entry("firstName", order.getOwner().getUserInfo().getUsername())
+                ),
+                order.getOwner().getUserInfo().getPhone(), // change this
+                Language.English
+        );
+
         return switch (status) {
             case Success -> ResponseEntity.ok("Shipment cancelled successfully");
             case ShipmentNotCancellable -> ResponseEntity.status(403).body("Shipment can not be cancelled");
@@ -230,13 +243,21 @@ public class OrderController {
             status = IOrderService.ShipmentStatus.ShipmentCancelled;
         }
 
+        notificationService.sendNotification(
+                OrderShippedTemplate.class,
+                Map.ofEntries(
+                        Map.entry("orderId", Integer.toString(order.getId())),
+                        Map.entry("firstName", order.getOwner().getUserInfo().getUsername())
+                ),
+                order.getOwner().getUserInfo().getPhone(), // change this
+                Language.English
+        );
+
         return switch (status) {
             case Success -> ResponseEntity.status(HttpStatus.OK).body("Order shipped successfully");
             case ShipmentNotFound -> ResponseEntity.status(404).body("Order not found");
             case ShipmentCancelled -> ResponseEntity.status(403).body("A customer does not have balance for shipment");
             default -> null;
         };
-
-
     }
 }
