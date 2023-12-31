@@ -1,5 +1,7 @@
 package Assignment2.OrdersAndNotificationsManagement.repository.classess;
 
+
+import Assignment2.OrdersAndNotificationsManagement.model.Product;
 import Assignment2.OrdersAndNotificationsManagement.model.order.Order;
 import Assignment2.OrdersAndNotificationsManagement.repository.interfaces.IOrderRepository;
 
@@ -53,5 +55,23 @@ public class OrderRepository implements IOrderRepository {
         }
 
         return orders;
+    }
+
+    @Override
+    public List<Integer> getOrderProducts(int orderId) {
+        List<Product> orderProducts = orders.get(orderId).getProducts();
+        List<Integer> productsID = null;
+
+        for( Product product : orderProducts )
+            productsID.add(product.getSerialNumber());
+
+        return productsID;
+    }
+
+    public Map<Integer,List<Integer>> getCustomersWithProducts(int orderId) {
+        Map<Integer,List<Integer>> orderInfo = null;
+        Order order = orders.get(orderId);
+
+        if(order.)
     }
 }

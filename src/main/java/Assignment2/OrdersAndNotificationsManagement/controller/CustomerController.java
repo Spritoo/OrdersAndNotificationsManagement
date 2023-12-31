@@ -30,11 +30,11 @@ public class CustomerController {
         return response;
     }
 
-    @PostMapping("/addFriend/{friend}")
-    public ResponseEntity<String> addFriend(@RequestBody Credentials credentials, @PathVariable("friend") int friend) {
+    @PostMapping("/addFriend/{friendId}")
+    public ResponseEntity<String> addFriend(@RequestBody Credentials credentials, @PathVariable("friend") int friendId) {
         ResponseEntity<String> response;
 
-        if (ICustomerService.addFriend(credentials, friend)) {
+        if (ICustomerService.addFriend(credentials, friendId)) {
             response = ResponseEntity.ok("Friend added successfully");
         } else {
             response = ResponseEntity.internalServerError().body("Failed to add friend");
@@ -43,7 +43,7 @@ public class CustomerController {
         return response;
     }
 
-    @GetMapping("/listfriends/{email}")
+    @GetMapping("/listfriends/{id}")
     public ResponseEntity<List<Integer>> listFriends(@PathVariable int id) {
         List<Integer> friends = ICustomerService.listFriends(id);
 

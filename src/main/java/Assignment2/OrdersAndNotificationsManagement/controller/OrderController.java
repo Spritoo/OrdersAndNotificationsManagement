@@ -94,6 +94,10 @@ public class OrderController {
             return ResponseEntity.status(HttpStatus.FORBIDDEN).body("You are not the owner of this order");
         }
 
+        if(!customerService.correctBalance(request.getCredentials(), productId)) {
+            return ResponseEntity.status(HttpStatus.BAD_REQUEST).body("You do not have enough balance");
+        }
+
         IOrderService.EditStatus status = orderService.addProductToOrder(orderId, productId);
 
         return switch (status) {

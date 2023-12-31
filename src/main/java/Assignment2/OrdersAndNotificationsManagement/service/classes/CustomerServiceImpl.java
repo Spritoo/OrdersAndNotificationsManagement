@@ -56,4 +56,27 @@ public class CustomerServiceImpl implements ICustomerService {
     public Customer authenticate(Credentials credentials) {
         return customerRepository.authenticate(credentials);
     }
+
+    @Override
+    public boolean correctBalance(Credentials credentials, int productID) {
+        if(customerRepository.checkBalance(credentials, productRepository.getProduct(productID).getPrice())){
+            customerRepository.deductBalance(credentials, productRepository.getProduct(productID).getPrice());
+
+            return true;
+        }
+
+        return false;
+    }
+
+    @Override
+    public void returnBalanceAfterCancellation(Credentials credentials, List<Integer> productsId) {
+        Customer customer = customerRepository.getCustomerByCredentials(credentials);
+
+        for(int productID : productsId) {
+            double customerBalance = customerRepository.getCustomerByCredentials(credentials).getUserInfo().getBalance();
+            double productPrice = productRepository.getProduct(productID).getPrice();
+
+            customerRepository.updateBalance(customer, customerBalance + productPrice);
+        }
+    }
 }

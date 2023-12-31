@@ -13,4 +13,6 @@ public interface ICustomerService {
     public boolean addFriend(Credentials credentials, int friendId) ;
     public UserInfo getCustomerInfo(Credentials credentials);
     public Customer authenticate(Credentials credentials);
+    public boolean correctBalance(Credentials credentials, int productID);
+    public void returnBalanceAfterCancellation(Credentials credentials, List<Integer> productsId);
 }

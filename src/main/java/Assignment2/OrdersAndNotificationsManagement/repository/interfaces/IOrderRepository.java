@@ -10,4 +10,5 @@ public interface IOrderRepository {
     public Order getOrder(int orderId);
     public List<Order> getOrdersByIds(List<Integer> orderIds);
     public List<Order> getOrders();
+    public List<Integer> getOrderProducts(int orderId);
 }

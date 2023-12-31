@@ -42,8 +42,22 @@ public class CustomerRepository implements ICustomerRepository {
     }
 
     @Override
-    public void updateBalance(Customer costumer, Double balance) {
-        customers.get(costumer.getId()).getUserInfo().setBalance(balance);
+    public void updateBalance(Customer customer, Double balance) {
+        customers.get(customer.getId()).getUserInfo().setBalance(balance);
+    }
+
+    @Override
+    public boolean checkBalance(Credentials credentials, Double price) {
+        Customer customer = authenticate(credentials);
+
+        return customer.getUserInfo().getBalance() > price;
+    }
+
+    @Override
+    public void deductBalance(Credentials credentials, Double price) {
+        Customer customer = authenticate(credentials);
+
+        customers.get(customer.getId()).getUserInfo().setBalance(customer.getUserInfo().getBalance() - price);
     }
 
     @Override
