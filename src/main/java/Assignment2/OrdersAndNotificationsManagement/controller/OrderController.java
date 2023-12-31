@@ -217,7 +217,7 @@ public class OrderController {
                         Map.entry("orderId", Integer.toString(order.getId())),
                         Map.entry("firstName", order.getOwner().getUserInfo().getUsername())
                 ),
-                order.getOwner().getUserInfo().getPhone(), // change this
+                order.getOwner(),
                 Language.English
         );
 
@@ -250,7 +250,7 @@ public class OrderController {
                         Map.entry("orderId", Integer.toString(order.getId())),
                         Map.entry("firstName", order.getOwner().getUserInfo().getUsername())
                 ),
-                order.getOwner().getUserInfo().getPhone(), // change this
+                order.getOwner(),
                 Language.English
         );
 

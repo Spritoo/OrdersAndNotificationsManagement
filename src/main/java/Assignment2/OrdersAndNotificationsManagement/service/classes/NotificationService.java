@@ -6,6 +6,7 @@ import Assignment2.OrdersAndNotificationsManagement.dispatcher.SMSNotificationDi
 import Assignment2.OrdersAndNotificationsManagement.model.Language;
 import Assignment2.OrdersAndNotificationsManagement.model.notification.Notification;
 import Assignment2.OrdersAndNotificationsManagement.model.notification.template.NotificationTemplate;
+import Assignment2.OrdersAndNotificationsManagement.model.user.Customer;
 import Assignment2.OrdersAndNotificationsManagement.repository.classes.NotificationTemplateRepository;
 import Assignment2.OrdersAndNotificationsManagement.repository.interfaces.INotificationRepository;
 import Assignment2.OrdersAndNotificationsManagement.repository.classes.NotificationRepository;
@@ -46,7 +47,7 @@ public class NotificationService implements INotificationService {
     public boolean sendNotification(
             Class<?> templateId,
             Map<String, String> parameters,
-            String recipient,
+            Customer recipient,
             Language language
     ) {
         NotificationTemplate template = notificationTemplateRepository.get(templateId);
