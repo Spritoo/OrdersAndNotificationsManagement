@@ -9,6 +9,7 @@ import Assignment2.OrdersAndNotificationsManagement.model.notification.template.
 import Assignment2.OrdersAndNotificationsManagement.repository.classes.NotificationTemplateRepository;
 import Assignment2.OrdersAndNotificationsManagement.repository.interfaces.INotificationRepository;
 import Assignment2.OrdersAndNotificationsManagement.repository.classes.NotificationRepository;
+import Assignment2.OrdersAndNotificationsManagement.repository.interfaces.INotificationService;
 import Assignment2.OrdersAndNotificationsManagement.repository.interfaces.INotificationTemplateRepository;
 import org.springframework.scheduling.annotation.Scheduled;
 import org.springframework.stereotype.Service;
@@ -19,7 +20,7 @@ import java.util.List;
 import java.util.Map;
 
 @Service
-public class NotificationService {
+public class NotificationService implements INotificationService {
     // notification dispatch rate in milliseconds
     private static final int NOTIFICATION_TIMER_RATE = 5000; // 5s
 
