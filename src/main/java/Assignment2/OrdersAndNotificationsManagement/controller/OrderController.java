@@ -8,6 +8,7 @@ import Assignment2.OrdersAndNotificationsManagement.model.order.SimpleOrder;
 import Assignment2.OrdersAndNotificationsManagement.model.user.Customer;
 import Assignment2.OrdersAndNotificationsManagement.service.interfaces.ICustomerService;
 import Assignment2.OrdersAndNotificationsManagement.service.interfaces.IOrderService;
+import Assignment2.OrdersAndNotificationsManagement.util.Pair;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -51,13 +52,14 @@ public class OrderController {
         }
 
         List<Integer> orderIds = request.getPayload();
-        CompoundOrder order = orderService.createCompoundOrder(customer, orderIds);
+        Pair<IOrderService.CreateCompoundOrderStatus, CompoundOrder> result = orderService.createCompoundOrder(customer, orderIds);
 
-        if (order == null) {
-            return ResponseEntity.badRequest().build();
-        }
-
-        return ResponseEntity.ok(new OrderDTO(order));
+        return switch (result.getKey()) {
+            case Success -> ResponseEntity.ok(new OrderDTO(result.getValue()));
+            case OrderNotFound -> ResponseEntity.status(HttpStatus.NOT_FOUND).body(null);
+            case OrderOwnerNotFriend -> ResponseEntity.status(HttpStatus.FORBIDDEN).body(null);
+            default -> null;
+        };
     }
 
     // GET /orders/{id}
@@ -73,13 +75,13 @@ public class OrderController {
     }
 
     // POST /orders/{orderId}/products/{productId}
-    @PostMapping("/{orderId}/products/{productId}")
+    @PostMapping("/{orderId}/products")
     ResponseEntity<String> addProductToOrder(
             @PathVariable("orderId") int orderId,
-            @PathVariable("productId") int productId,
-            @RequestBody AuthenticatedRequest<Void> request
+            @RequestBody AuthenticatedRequest<Integer> request
     ) {
         Customer customer = customerService.authenticate(request.getCredentials());
+        int productId = request.getPayload();
 
         if (customer == null) {
             return ResponseEntity.status(HttpStatus.UNAUTHORIZED).build();
@@ -110,13 +112,13 @@ public class OrderController {
     }
 
     // POST /order/{parentOrderId}/orders/{childOrderId}
-    @PostMapping("/{parentOrderId}/orders/{childOrderId}")
+    @PostMapping("/{parentOrderId}/orders")
     ResponseEntity<String> addOrderToOrder(
             @PathVariable("parentOrderId") int parentOrderId,
-            @PathVariable("childOrderId") int childOrderId,
-            @RequestBody AuthenticatedRequest<Void> request
+            @RequestBody AuthenticatedRequest<Integer> request
     ) {
         Customer customer = customerService.authenticate(request.getCredentials());
+        int childOrderId = request.getPayload();
 
         if (customer == null) {
             return ResponseEntity.status(HttpStatus.UNAUTHORIZED).build();
@@ -148,8 +150,8 @@ public class OrderController {
         };
     }
 
-    // DELETE /orders/cancel/{id}
-    @DeleteMapping("/cancel/{id}")
+    // DELETE /orders/{id}
+    @DeleteMapping("/{id}")
     ResponseEntity<String> cancelOrder(
             @PathVariable("id") int orderId,
             @RequestBody AuthenticatedRequest<Void> request
@@ -182,8 +184,8 @@ public class OrderController {
     }
 
     // todo: this
-    // DELETE /orders/cancel/{id}/shipment
-    @DeleteMapping("/cancel/{id}/shipment")
+    // DELETE /orders/{id}/shipment
+    @DeleteMapping("/{id}/shipment")
     ResponseEntity<String> cancelShipment(@PathVariable("id") int id) {
         Order order = orderService.getOrder(id);
 

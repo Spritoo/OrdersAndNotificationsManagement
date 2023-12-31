@@ -8,13 +8,14 @@ import java.util.List;
 
 public interface ICustomerRepository {
 
-    public boolean add(Customer costumer);
+    public Customer add(Credentials credentials, UserInfo userInfo);
     public void remove(Customer costumer);
     public void updateBalance(Customer costumer, Double balance);
-    public boolean addfriend(Credentials credentials, int friend);
+    public void addFriend(Customer customer, Customer friend);
     public Customer getCustomerByCredentials(Credentials credentials);
     public Customer getCustomerById(int id);
-    public UserInfo getCustomerInfo(Credentials credentials);
+    public Customer getCustomerByEmail(String emailAddress);
+        public UserInfo getCustomerInfo(Credentials credentials);
     public List<Integer> GetFriends(int id);
     public Customer authenticate(Credentials credentials);
     public void deductBalance(Credentials credentials, Double price);

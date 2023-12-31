@@ -1,7 +1,7 @@
 package Assignment2.OrdersAndNotificationsManagement.service.classes;
 
 import Assignment2.OrdersAndNotificationsManagement.repository.interfaces.IProductRepository;
-import Assignment2.OrdersAndNotificationsManagement.repository.classess.ProductRepository;
+import Assignment2.OrdersAndNotificationsManagement.repository.classes.ProductRepository;
 import Assignment2.OrdersAndNotificationsManagement.model.Product;
 import Assignment2.OrdersAndNotificationsManagement.service.interfaces.ProductService;
 import org.springframework.stereotype.Service;

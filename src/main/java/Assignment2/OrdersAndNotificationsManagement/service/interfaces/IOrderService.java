@@ -6,12 +6,19 @@ import Assignment2.OrdersAndNotificationsManagement.model.order.Order;
 import Assignment2.OrdersAndNotificationsManagement.model.order.SimpleOrder;
 import Assignment2.OrdersAndNotificationsManagement.model.user.Credentials;
 import Assignment2.OrdersAndNotificationsManagement.model.user.Customer;
+import Assignment2.OrdersAndNotificationsManagement.util.Pair;
 
 import java.util.List;
 import java.util.Map;
 import java.util.Vector;
 
 public interface IOrderService {
+    public enum CreateCompoundOrderStatus {
+        Success,
+        OrderNotFound,
+        OrderOwnerNotFriend
+    }
+
     public enum CancellationStatus {
         Success,
         OrderNotFound,
@@ -35,7 +42,7 @@ public interface IOrderService {
     }
 
     SimpleOrder createSimpleOrder(Customer owner);
-    CompoundOrder createCompoundOrder(Customer owner, List<Integer> orderIds);
+    Pair<CreateCompoundOrderStatus, CompoundOrder> createCompoundOrder(Customer owner, List<Integer> orderIds);
     Order getOrder(int orderId);
     CancellationStatus canCancelOrder(int orderId);
     public void cancelOrder(int orderId);

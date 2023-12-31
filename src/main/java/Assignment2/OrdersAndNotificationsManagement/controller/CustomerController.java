@@ -1,9 +1,13 @@
 package Assignment2.OrdersAndNotificationsManagement.controller;
 
+import Assignment2.OrdersAndNotificationsManagement.dto.AuthenticatedRequest;
+import Assignment2.OrdersAndNotificationsManagement.dto.CustomerDTO;
+import Assignment2.OrdersAndNotificationsManagement.dto.CustomerFormDTO;
 import Assignment2.OrdersAndNotificationsManagement.model.user.Credentials;
 import Assignment2.OrdersAndNotificationsManagement.model.user.Customer;
 import Assignment2.OrdersAndNotificationsManagement.model.user.UserInfo;
 import Assignment2.OrdersAndNotificationsManagement.service.interfaces.ICustomerService;
+import org.apache.coyote.Response;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -12,40 +16,57 @@ import org.springframework.web.bind.annotation.*;
 import java.util.List;
 
 @RestController
-@RequestMapping("/customer")
+@RequestMapping("/customers")
 public class CustomerController {
     @Autowired
-    ICustomerService ICustomerService;
+    ICustomerService customerService;
 
-    @PostMapping("/create")
-    public ResponseEntity<String> createAccount(@RequestBody Customer customer) {
-        ResponseEntity<String> response;
+    @PostMapping("/")
+    public ResponseEntity<CustomerDTO> createAccount(@RequestBody CustomerFormDTO customerFormDTO) {
+        ResponseEntity<CustomerDTO> response;
+        Customer customer = customerService.createAccount(customerFormDTO.getCredentials(), customerFormDTO.getUserInfo());
 
-        if (ICustomerService.createAccount(customer)) {
-            response = ResponseEntity.ok("Account created successfully");
+        if (customer != null) {
+            CustomerDTO customerDTO = new CustomerDTO(customer.getId(), customer.getUserInfo());
+
+            response = ResponseEntity.ok(customerDTO);
         } else {
-            response = ResponseEntity.status(HttpStatus.CONFLICT).body("Account already exists");
+            response = ResponseEntity.status(HttpStatus.CONFLICT).build();
         }
 
         return response;
     }
 
-    @PostMapping("/addFriend/{friendId}")
-    public ResponseEntity<String> addFriend(@RequestBody Credentials credentials, @PathVariable("friend") int friendId) {
+    @PostMapping("/{id}/friends")
+    public ResponseEntity<String> addFriend(
+            @RequestBody AuthenticatedRequest<Integer> request,
+            @PathVariable("id") int id
+    ) {
+        Customer customer = customerService.authenticate(request.getCredentials());
+        int friendId = request.getPayload();
+
+        if (customer == null) {
+            return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body("Invalid credentials");
+        }
+
+        if (customer.getId() != id) {
+            return ResponseEntity.status(HttpStatus.FORBIDDEN).body("You can only add friends to your own account");
+        }
+
         ResponseEntity<String> response;
 
-        if (ICustomerService.addFriend(credentials, friendId)) {
+        if (customerService.addFriend(id, friendId)) {
             response = ResponseEntity.ok("Friend added successfully");
         } else {
-            response = ResponseEntity.internalServerError().body("Failed to add friend");
+            response = ResponseEntity.status(HttpStatus.NOT_FOUND).body("Failed to add friend. The friend ID provided does not exist.");
         }
 
         return response;
     }
 
-    @GetMapping("/listfriends/{id}")
+    @GetMapping("/{id}/friends")
     public ResponseEntity<List<Integer>> listFriends(@PathVariable int id) {
-        List<Integer> friends = ICustomerService.listFriends(id);
+        List<Integer> friends = customerService.listFriends(id);
 
         if (friends == null || friends.isEmpty()) {
             return new ResponseEntity<>(HttpStatus.NO_CONTENT);
@@ -54,29 +75,29 @@ public class CustomerController {
         return new ResponseEntity<>(friends, HttpStatus.OK);
     }
 
-    @GetMapping("/check")
-    public ResponseEntity<UserInfo> getInfo(@RequestBody Credentials credentials) {
-        UserInfo userInfo = ICustomerService.getCustomerInfo(credentials);
+    @GetMapping("/{id}")
+    public ResponseEntity<CustomerDTO> getInfo(@RequestBody Credentials credentials, @PathVariable("id") int id) {
+        Customer customer = customerService.authenticate(credentials);
 
-        if (userInfo != null) {
-            return new ResponseEntity<>(userInfo, HttpStatus.OK);
+        if (customer != null && customer.getId() == id) {
+            CustomerDTO customerDTO = new CustomerDTO(customer.getId(), customer.getUserInfo());
+
+            return new ResponseEntity<>(customerDTO, HttpStatus.OK);
         } else {
             return new ResponseEntity<>(HttpStatus.UNAUTHORIZED);
         }
     }
 
-    @PutMapping("/updateBalance/{balance}")
-    public ResponseEntity<String> updateCustomerBalance(
-            @PathVariable double balance,
-            @RequestBody Credentials credentials
-    ) {
-        UserInfo userInfo = ICustomerService.getCustomerInfo(credentials);
+    @PutMapping("/balance")
+    public ResponseEntity<String> updateCustomerBalance(@RequestBody AuthenticatedRequest<Double> request) {
+        Customer customer = customerService.authenticate(request.getCredentials());
+        double balance = request.getPayload();
 
-        if (userInfo != null) {
-            ICustomerService.updateCustomerBalance(credentials,balance);
-            return new ResponseEntity<>("Balance updated successfully",HttpStatus.OK);
-        } else {
-            return new ResponseEntity<>("Failed to update Balance",HttpStatus.UNAUTHORIZED);
+        if (customer == null) {
+            return ResponseEntity.status(HttpStatus.UNAUTHORIZED).build();
         }
+
+        customerService.updateCustomerBalance(customer.getCredentials(),balance);
+        return new ResponseEntity<>("Balance updated successfully",HttpStatus.OK);
     }
 }

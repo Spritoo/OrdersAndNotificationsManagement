@@ -1,4 +1,4 @@
-package Assignment2.OrdersAndNotificationsManagement.repository.classess;
+package Assignment2.OrdersAndNotificationsManagement.repository.classes;
 
 import Assignment2.OrdersAndNotificationsManagement.model.user.Credentials;
 import Assignment2.OrdersAndNotificationsManagement.model.user.Customer;
@@ -13,6 +13,7 @@ import java.util.Map;
 public class CustomerRepository implements ICustomerRepository {
     private static CustomerRepository instance = null;
     private Map<Integer, Customer> customers = new HashMap<Integer, Customer>();
+    public int nextId = 1;
 
     private CustomerRepository() {}
 
@@ -25,15 +26,19 @@ public class CustomerRepository implements ICustomerRepository {
     }
 
     @Override
-    public boolean add(Customer costumer) {
-        if(customers.containsKey(costumer.getId())){
-            return false;
-        }
-        else {
-            customers.put(costumer.getId(),costumer);
-            return true;
+    public Customer add(Credentials credentials, UserInfo userInfo) {
+        Customer existingCustomer = getCustomerByEmail(credentials.getEmail());
+
+        if (existingCustomer != null) {
+            return null;
         }
 
+        int id = nextId++;
+        Customer customer = new Customer(id, credentials, userInfo);
+
+        customers.put(id, customer);
+
+        return customer;
     }
 
     @Override
@@ -61,15 +66,19 @@ public class CustomerRepository implements ICustomerRepository {
     }
 
     @Override
-    public boolean addfriend(Credentials credentials, int friend) {
-        Customer customer = authenticate(credentials);
-        if(customer.getFriends().contains(friend)){
-            return false;
-        } else {
-            int id = customer.getId();
-            customers.get(id).addFriend(friend);
-            customers.get(friend).addFriend(id);
-            return true;
+    public void addFriend(Customer customer, Customer friend) {
+        int myId = customer.getId();
+        int friendId = friend.getId();
+
+        List<Integer> myFriends = customer.getFriends();
+        List<Integer> theirFriends = friend.getFriends();
+
+        if (!myFriends.contains(friendId)){
+            myFriends.add(friendId);
+        }
+
+        if (!theirFriends.contains(myId)){
+            theirFriends.add(myId);
         }
     }
 
@@ -81,6 +90,17 @@ public class CustomerRepository implements ICustomerRepository {
     @Override
     public Customer getCustomerById(int id) {
         return customers.get(id);
+    }
+
+    @Override
+    public Customer getCustomerByEmail(String emailAddress) {
+        for (Customer customer: customers.values()) {
+            if (customer.getCredentials().getEmail().equals(emailAddress)) {
+                return customer;
+            }
+        }
+
+        return null;
     }
 
     @Override

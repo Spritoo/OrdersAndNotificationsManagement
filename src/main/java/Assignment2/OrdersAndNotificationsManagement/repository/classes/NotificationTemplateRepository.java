@@ -1,4 +1,4 @@
-package Assignment2.OrdersAndNotificationsManagement.repository.classess;
+package Assignment2.OrdersAndNotificationsManagement.repository.classes;
 
 import Assignment2.OrdersAndNotificationsManagement.model.Language;
 import Assignment2.OrdersAndNotificationsManagement.model.notification.NotificationTemplate;
@@ -39,7 +39,7 @@ public class NotificationTemplateRepository implements INotificationTemplateRepo
         addTemplate(new NotificationTemplate(
                 "ORDER_SHIPPED",
                 "Your order has been shipped",
-                "Dear {firstName}, your order [{}] has been shipped.",
+                "Dear {firstName}, your order [{orderId}] has been shipped.",
                 new Language[]{Language.English, Language.Arabic}
         ));
     }

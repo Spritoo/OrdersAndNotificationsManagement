@@ -2,7 +2,7 @@ package Assignment2.OrdersAndNotificationsManagement.service.classes;
 
 import Assignment2.OrdersAndNotificationsManagement.model.notification.Notification;
 import Assignment2.OrdersAndNotificationsManagement.repository.interfaces.INotificationRepository;
-import Assignment2.OrdersAndNotificationsManagement.repository.classess.NotificationRepository;
+import Assignment2.OrdersAndNotificationsManagement.repository.classes.NotificationRepository;
 import org.springframework.scheduling.annotation.Scheduled;
 import org.springframework.stereotype.Service;
 

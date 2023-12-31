@@ -1,12 +1,13 @@
 package Assignment2.OrdersAndNotificationsManagement.service.classes;
 
-import Assignment2.OrdersAndNotificationsManagement.repository.classess.CustomerRepository;
+import Assignment2.OrdersAndNotificationsManagement.dto.CustomerFormDTO;
+import Assignment2.OrdersAndNotificationsManagement.repository.classes.CustomerRepository;
 import Assignment2.OrdersAndNotificationsManagement.model.user.Credentials;
 import Assignment2.OrdersAndNotificationsManagement.model.user.Customer;
 import Assignment2.OrdersAndNotificationsManagement.model.user.UserInfo;
 import Assignment2.OrdersAndNotificationsManagement.repository.interfaces.ICustomerRepository;
 import Assignment2.OrdersAndNotificationsManagement.repository.interfaces.IProductRepository;
-import Assignment2.OrdersAndNotificationsManagement.repository.classess.ProductRepository;
+import Assignment2.OrdersAndNotificationsManagement.repository.classes.ProductRepository;
 import Assignment2.OrdersAndNotificationsManagement.service.interfaces.ICustomerService;
 import org.springframework.stereotype.Service;
 
@@ -19,8 +20,8 @@ public class CustomerServiceImpl implements ICustomerService {
     private final IProductRepository productRepository = ProductRepository.getInstance();
 
     @Override
-    public boolean createAccount(Customer customer) {
-        return customerRepository.add(customer);
+    public Customer createAccount(Credentials credentials, UserInfo userInfo) {
+        return customerRepository.add(credentials, userInfo);
     }
 
     @Override
@@ -29,23 +30,20 @@ public class CustomerServiceImpl implements ICustomerService {
     }
 
     @Override
-    public boolean addFriend(Credentials credentials, int friendID) {
-        Customer customer = customerRepository.getCustomerByCredentials(credentials);
-        Customer friend = customerRepository.getCustomerById(friendID);
+    public boolean addFriend(int userId, int friendId) {
+        Customer customer = customerRepository.getCustomerById(userId);
+        Customer friend = customerRepository.getCustomerById(friendId);
 
-        Credentials customerCredentialsCustomer = customer.getCredentials();
+        System.out.println(customer);
+        System.out.println(friendId);
 
-        boolean isRightEmailCustomer = customerCredentialsCustomer.getEmail().equals(credentials.getEmail());
-        boolean isRightPasswordCustomer = customerCredentialsCustomer.getPassword().equals(credentials.getPassword());
-
-        if (isRightEmailCustomer && isRightPasswordCustomer) {
-
-            if (customer != null && friend != null) {
-                return customerRepository.addfriend(credentials, friendID);
-            }
+        if (customer == null || friend == null) {
+            return false;
         }
 
-        return false;
+        customerRepository.addFriend(customer, friend);
+
+        return true;
     }
 
     @Override

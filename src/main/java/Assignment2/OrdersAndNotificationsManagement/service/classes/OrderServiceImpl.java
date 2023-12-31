@@ -5,11 +5,12 @@ import Assignment2.OrdersAndNotificationsManagement.model.order.CompoundOrder;
 import Assignment2.OrdersAndNotificationsManagement.model.order.Order;
 import Assignment2.OrdersAndNotificationsManagement.model.order.SimpleOrder;
 import Assignment2.OrdersAndNotificationsManagement.model.user.Customer;
-import Assignment2.OrdersAndNotificationsManagement.repository.classess.OrderRepository;
-import Assignment2.OrdersAndNotificationsManagement.repository.classess.ProductRepository;
+import Assignment2.OrdersAndNotificationsManagement.repository.classes.OrderRepository;
+import Assignment2.OrdersAndNotificationsManagement.repository.classes.ProductRepository;
 import Assignment2.OrdersAndNotificationsManagement.repository.interfaces.IOrderRepository;
 import Assignment2.OrdersAndNotificationsManagement.repository.interfaces.IProductRepository;
 import Assignment2.OrdersAndNotificationsManagement.service.interfaces.IOrderService;
+import Assignment2.OrdersAndNotificationsManagement.util.Pair;
 import org.springframework.stereotype.Service;
 
 import java.time.temporal.ChronoUnit;
@@ -36,11 +37,22 @@ public class OrderServiceImpl implements IOrderService {
     }
 
     @Override
-    public CompoundOrder createCompoundOrder(Customer owner, List<Integer> orderIds) {
+    public Pair<CreateCompoundOrderStatus, CompoundOrder> createCompoundOrder(Customer owner, List<Integer> orderIds) {
         List<Order> orders = orderRepository.getOrdersByIds(orderIds);
+        List<Integer> friendIds = owner.getFriends();
 
-        if (orders.size() < orderIds.size()) {
-            return null;
+        Pair<CreateCompoundOrderStatus, CompoundOrder> result = new Pair<>();
+
+        for (Order childOrder: orders) {
+            if (childOrder == null) {
+                return result.setKey(CreateCompoundOrderStatus.OrderNotFound);
+            }
+
+            Customer childOrderOwner = childOrder.getOwner();
+
+            if (!friendIds.contains(childOrderOwner.getId())) {
+                return result.setKey(CreateCompoundOrderStatus.OrderOwnerNotFriend);
+            }
         }
 
         CompoundOrder order = new CompoundOrder(owner, orders);
@@ -50,7 +62,7 @@ public class OrderServiceImpl implements IOrderService {
 
         orderRepository.addOrder(order);
 
-        return order;
+        return result.setKey(CreateCompoundOrderStatus.Success).setValue(order);
     }
 
     @Override

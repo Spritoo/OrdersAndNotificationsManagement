@@ -1,4 +1,4 @@
-package Assignment2.OrdersAndNotificationsManagement.repository.classess;
+package Assignment2.OrdersAndNotificationsManagement.repository.classes;
 
 import Assignment2.OrdersAndNotificationsManagement.model.notification.Notification;
 import Assignment2.OrdersAndNotificationsManagement.repository.interfaces.INotificationRepository;
