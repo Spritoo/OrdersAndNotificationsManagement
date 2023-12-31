@@ -16,4 +16,5 @@ public interface INotificationService {
     );
 
     public List<Notification> getAll();
+    public Map<String, Map<String, Integer>> getStats();
 }

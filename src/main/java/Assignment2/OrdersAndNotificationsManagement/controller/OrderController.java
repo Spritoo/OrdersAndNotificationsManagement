@@ -22,7 +22,6 @@ import java.util.List;
 import java.util.Map;
 
 // todo: Abstract controller with authentication method OR use spring security OR a middleware
-// The authentication is fucked please someone come up with a better solution
 
 @RestController
 @RequestMapping("/orders")

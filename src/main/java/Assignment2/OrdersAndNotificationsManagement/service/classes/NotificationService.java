@@ -28,12 +28,17 @@ public class NotificationService implements INotificationService {
     private INotificationTemplateRepository notificationTemplateRepository = NotificationTemplateRepository.getInstance();
     private INotificationRepository notificationRepository = NotificationRepository.getInstance();
     private Map<Class<?>, INotificationDispatcher> dispatchers = new HashMap<>();
+    private Map<String, Map<String, Integer>> recipientCounters;
 
     public NotificationService() {
         dispatchers = Map.of(
             EmailNotificationDispatcher.class, new EmailNotificationDispatcher(),
             SMSNotificationDispatcher.class, new SMSNotificationDispatcher()
         );
+
+        for (Class<?> channel: getAvailableChannels()) {
+            recipientCounters.put(channel.getName(), new HashMap<>());
+        }
     }
 
     private List<Class<?>> getAvailableChannels() {
@@ -81,6 +86,10 @@ public class NotificationService implements INotificationService {
         return notificationRepository.getAll();
     }
 
+    public Map<String, Map<String, Integer>> getStats() {
+        return recipientCounters;
+    }
+
     public void add(Notification notification) {
         notificationRepository.add(notification);
     }
@@ -92,6 +101,7 @@ public class NotificationService implements INotificationService {
 
         for (Notification notification: notifications) {
             Class<?> notificationType = notification.getType();
+
             dispatcher = this.dispatchers.get(notificationType);
 
             if (dispatcher == null) {
@@ -99,6 +109,8 @@ public class NotificationService implements INotificationService {
 
                 continue;
             }
+
+            recipientCounters.get(notificationType.getName()).merge(notification.getRecipient(), 1, Integer::sum);
 
             dispatcher.dispatch(notification);
         }
