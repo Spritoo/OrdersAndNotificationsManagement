@@ -66,7 +66,7 @@ public class CustomerController {
     }
 
     @PutMapping("/updateBalance/{balance}")
-    public ResponseEntity<UserInfo> updateCustomerBalance(
+    public ResponseEntity<String> updateCustomerBalance(
             @PathVariable double balance,
             @RequestBody Credentials credentials
     ) {
@@ -74,9 +74,9 @@ public class CustomerController {
 
         if (userInfo != null) {
             ICustomerService.updateCustomerBalance(credentials,balance);
-            return new ResponseEntity<>(HttpStatus.OK);
+            return new ResponseEntity<>("Balance updated successfully",HttpStatus.OK);
         } else {
-            return new ResponseEntity<>(HttpStatus.UNAUTHORIZED);
+            return new ResponseEntity<>("Failed to update Balance",HttpStatus.UNAUTHORIZED);
         }
     }
 }
