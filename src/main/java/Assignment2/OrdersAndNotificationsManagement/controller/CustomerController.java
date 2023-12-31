@@ -64,4 +64,19 @@ public class CustomerController {
             return new ResponseEntity<>(HttpStatus.UNAUTHORIZED);
         }
     }
+
+    @PutMapping("/updateBalance/{balance}")
+    public ResponseEntity<UserInfo> updateCustomerBalance(
+            @PathVariable double balance,
+            @RequestBody Credentials credentials
+    ) {
+        UserInfo userInfo = ICustomerService.getCustomerInfo(credentials);
+
+        if (userInfo != null) {
+            ICustomerService.updateCustomerBalance(credentials,balance);
+            return new ResponseEntity<>(HttpStatus.OK);
+        } else {
+            return new ResponseEntity<>(HttpStatus.UNAUTHORIZED);
+        }
+    }
 }

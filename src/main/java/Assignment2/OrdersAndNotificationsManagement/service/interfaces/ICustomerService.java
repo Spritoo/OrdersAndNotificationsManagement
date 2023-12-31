@@ -19,4 +19,5 @@ public interface ICustomerService {
     public boolean isFriends(int id, int friend);
     public void returnShipmentFees(Map<Integer, List<Integer>> customerAndProducts);
     public boolean decductShipmentFees(Map<Integer, List<Integer>> customerAndProducts);
+    public boolean updateCustomerBalance(Credentials credentials,double newBalance);
 }

@@ -131,4 +131,19 @@ public class CustomerServiceImpl implements ICustomerService {
             customerRepository.getCustomerById(customerID).getUserInfo().setBalance(customerBalance + (shippingFees*counter));
         }
     }
+
+    @Override
+    public boolean updateCustomerBalance(Credentials credentials,double newBalance) {
+        Customer customer = customerRepository.getCustomerByCredentials(credentials);
+
+        if(customer == null) {
+            return false;
+        }
+
+        double oldBalance = customer.getUserInfo().getBalance();
+
+        customerRepository.getCustomerByCredentials(credentials).getUserInfo().setBalance(oldBalance + newBalance);
+
+        return true;
+    }
 }
