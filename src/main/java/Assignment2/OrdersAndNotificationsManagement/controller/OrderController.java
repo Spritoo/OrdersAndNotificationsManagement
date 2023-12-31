@@ -3,6 +3,7 @@ package Assignment2.OrdersAndNotificationsManagement.controller;
 import Assignment2.OrdersAndNotificationsManagement.dto.AuthenticatedRequest;
 import Assignment2.OrdersAndNotificationsManagement.dto.OrderDTO;
 import Assignment2.OrdersAndNotificationsManagement.model.Language;
+import Assignment2.OrdersAndNotificationsManagement.model.notification.template.OrderShipmentCanceledTemplate;
 import Assignment2.OrdersAndNotificationsManagement.model.notification.template.OrderShippedTemplate;
 import Assignment2.OrdersAndNotificationsManagement.model.order.CompoundOrder;
 import Assignment2.OrdersAndNotificationsManagement.model.order.Order;
@@ -211,7 +212,7 @@ public class OrderController {
         }
 
         notificationService.sendNotification(
-                OrderShipmentCanceled.class,
+                OrderShipmentCanceledTemplate.class,
                 Map.ofEntries(
                         Map.entry("orderId", Integer.toString(order.getId())),
                         Map.entry("firstName", order.getOwner().getUserInfo().getUsername())
