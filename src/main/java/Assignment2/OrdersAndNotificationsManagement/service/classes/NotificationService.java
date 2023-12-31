@@ -10,37 +10,45 @@ import Assignment2.OrdersAndNotificationsManagement.repository.classes.Notificat
 import org.springframework.scheduling.annotation.Scheduled;
 import org.springframework.stereotype.Service;
 
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 @Service
 public class NotificationService {
     // notification dispatch rate in milliseconds
     private static final int NOTIFICATION_TIMER_RATE = 5000; // 5s
+
     private INotificationRepository notificationRepository = NotificationRepository.getInstance();
+    private Map<Class<?>, INotificationDispatcher> dispatchers = new HashMap<>();
+
+    public NotificationService() {
+        dispatchers = Map.of(
+            EmailNotificationDispatcher.class, new EmailNotificationDispatcher(),
+            SMSNotificationDispatcher.class, new SMSNotificationDispatcher()
+        );
+    }
 
     public void add(Notification notification) {
         notificationRepository.add(notification);
     }
 
-    private INotificationDispatcher createNotificationDispatcher(String type) {
-        return switch (type) {
-            case "email" -> new EmailNotificationDispatcher();
-            case "sms" -> new SMSNotificationDispatcher();
-            default -> null;
-        };
-    }
-
     @Scheduled(fixedRate = NOTIFICATION_TIMER_RATE)
     public void dispatch() {
-        System.out.println("Hello world!");
-
         List<Notification> notifications = notificationRepository.flush();
+        INotificationDispatcher dispatcher;
 
         for (Notification notification: notifications) {
-            String templateId = notification.getTemplateId();
-            // NotificationTemplate template = NotificationTemplateRepository.getInstance().getTemplate(templateId);
+            Class<?> notificationType = notification.getType();
+            dispatcher = this.dispatchers.get(notificationType);
 
-            INotificationDispatcher dispatcher = createNotificationDispatcher(notification.getType());
+            if (dispatcher == null) {
+                System.out.println("No dispatcher found for notification type " + notificationType.getName());
+
+                continue;
+            }
+
+            dispatcher.dispatch(notification);
         }
     }
 }

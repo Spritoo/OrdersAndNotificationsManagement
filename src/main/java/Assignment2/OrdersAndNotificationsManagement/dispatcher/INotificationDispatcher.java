@@ -4,4 +4,5 @@ import Assignment2.OrdersAndNotificationsManagement.model.notification.Notificat
 
 public interface INotificationDispatcher {
     boolean dispatch(Notification notification);
+    Class<?> getSupportedNotificationType();
 }
