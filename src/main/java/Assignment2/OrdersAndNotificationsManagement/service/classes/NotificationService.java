@@ -28,7 +28,7 @@ public class NotificationService implements INotificationService {
     private INotificationTemplateRepository notificationTemplateRepository = NotificationTemplateRepository.getInstance();
     private INotificationRepository notificationRepository = NotificationRepository.getInstance();
     private Map<Class<?>, INotificationDispatcher> dispatchers = new HashMap<>();
-    private Map<String, Map<String, Integer>> recipientCounters;
+    private Map<String, Map<String, Integer>> recipientCounters = new HashMap<>();
 
     public NotificationService() {
         dispatchers = Map.of(
