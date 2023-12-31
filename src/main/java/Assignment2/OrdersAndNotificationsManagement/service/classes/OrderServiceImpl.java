@@ -153,7 +153,7 @@ public class OrderServiceImpl implements IOrderService {
         // get difference in days between two dates
         long diffInDays = ChronoUnit.DAYS.between(creationDate.toInstant(), currentDate.toInstant());
 
-        if (diffInDays > MAX_ORDER_CANCEL_TIME_IN_DAYS) {
+        if (diffInDays > MAX_SHIPMENT_CANCEL_TIME_IN_DAYS) {
             return ShipmentStatus.ShipmentNotCancellable;
         }
 

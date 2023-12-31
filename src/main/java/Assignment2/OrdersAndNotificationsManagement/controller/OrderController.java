@@ -149,7 +149,7 @@ public class OrderController {
     }
 
     // DELETE /orders/cancel/{id}
-    @DeleteMapping("cancel/{id}")
+    @DeleteMapping("/cancel/{id}")
     ResponseEntity<String> cancelOrder(
             @PathVariable("id") int orderId,
             @RequestBody AuthenticatedRequest<Void> request
