@@ -1,7 +1,7 @@
 package Assignment2.OrdersAndNotificationsManagement.repository.classes;
 
 import Assignment2.OrdersAndNotificationsManagement.model.Language;
-import Assignment2.OrdersAndNotificationsManagement.model.notification.NotificationTemplate;
+import Assignment2.OrdersAndNotificationsManagement.model.notification.template.NotificationTemplate;
 import Assignment2.OrdersAndNotificationsManagement.repository.interfaces.INotificationTemplateRepository;
 
 import java.util.HashMap;

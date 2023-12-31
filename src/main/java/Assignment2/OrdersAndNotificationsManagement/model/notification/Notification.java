@@ -6,15 +6,16 @@ import java.util.Map;
 
 public abstract class Notification {
     private String id;
+    private String recipient;
     private Map<String, String> arguments;
     private Language language;
 
     public Notification(
-            String id,
+            String recipient,
             Map<String, String> arguments,
             Language language
     ) {
-        this.id = id;
+        this.recipient = recipient;
         this.arguments = arguments;
         this.language = language;
     }
@@ -25,6 +26,14 @@ public abstract class Notification {
 
     public void setId(String id) {
         this.id = id;
+    }
+
+    public String getRecipient() {
+        return recipient;
+    }
+
+    public void setRecipient(String recipient) {
+        this.recipient = recipient;
     }
 
     public Map<String, String> getArguments() {

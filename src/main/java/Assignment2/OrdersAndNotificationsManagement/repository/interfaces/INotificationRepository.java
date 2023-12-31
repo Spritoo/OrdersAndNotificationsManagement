@@ -1,7 +1,6 @@
 package Assignment2.OrdersAndNotificationsManagement.repository.interfaces;
 
 import Assignment2.OrdersAndNotificationsManagement.model.notification.Notification;
-import Assignment2.OrdersAndNotificationsManagement.model.notification.NotificationTemplate;
 
 import java.util.List;
 
