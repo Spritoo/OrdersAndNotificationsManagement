@@ -116,4 +116,16 @@ public class CustomerRepository implements ICustomerRepository {
         return null;
     }
 
+    @Override
+    public boolean isFriends(int id, int friend) {
+        Customer customer = getCustomerById(id);
+        List<Integer> friends = customer.getFriends();
+
+        for(int friendID : friends) {
+            if(friendID == friend)
+                return true;
+        }
+
+        return false;
+    }
 }

@@ -5,6 +5,7 @@ import Assignment2.OrdersAndNotificationsManagement.model.user.Customer;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Map;
 
 public class SimpleOrder extends Order {
     private List<Product> productList = new ArrayList<>();
@@ -40,6 +41,7 @@ public class SimpleOrder extends Order {
         throw new UnsupportedOperationException("Cannot add orders to a simple order");
     }
 
+    @Override
     public boolean hasOrder(Order order) {
         return false;
     }
@@ -47,5 +49,20 @@ public class SimpleOrder extends Order {
     @Override
     public void removeOrder(Order order) {
         throw new UnsupportedOperationException("Cannot remove orders from a simple order");
+    }
+
+    @Override
+    public Map<Integer, List<Integer>> getOrderData() {
+        Map<Integer, List<Integer>> data = null;
+        int cutomerId = getOwner().getId();
+        List<Product> products = getProducts();
+        List<Integer> productsId = null;
+
+        for(Product product : products)
+            productsId.add(product.getSerialNumber());
+
+        data.put(cutomerId,productsId);
+
+        return data;
     }
 }

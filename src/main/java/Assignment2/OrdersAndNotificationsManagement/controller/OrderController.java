@@ -121,6 +121,7 @@ public class OrderController {
         }
 
         Order parentOrder = orderService.getOrder(parentOrderId);
+        Order childOrder = orderService.getOrder(childOrderId);
 
         if (parentOrder == null) {
             return ResponseEntity.status(HttpStatus.NOT_FOUND).body("Parent order not found");
@@ -131,6 +132,9 @@ public class OrderController {
         }
 
         // todo: check if they are both friends
+        if(!customerService.isFriends(parentOrder.getOwner().getId(),childOrder.getOwner().getId())) {
+            return ResponseEntity.status(HttpStatus.UNAUTHORIZED).build();
+        }
 
         IOrderService.EditStatus status = orderService.addOrderToOrder(parentOrderId, childOrderId);
 
@@ -160,7 +164,12 @@ public class OrderController {
             return ResponseEntity.status(HttpStatus.NOT_FOUND).body("Order not found");
         }
 
-        IOrderService.CancellationStatus status = orderService.cancelOrder(orderId);
+        IOrderService.CancellationStatus status = orderService.canCancelOrder(orderId);
+
+        if(status == IOrderService.CancellationStatus.Success) {
+            customerService.returnBalanceAfterCancellation(orderService.getOrderData(orderId));
+            orderService.cancelOrder(orderId);
+        }
 
         return switch (status) {
             case Success -> ResponseEntity.ok("Order cancelled successfully");

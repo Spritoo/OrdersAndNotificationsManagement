@@ -68,10 +68,13 @@ public class OrderRepository implements IOrderRepository {
         return productsID;
     }
 
+    @Override
     public Map<Integer,List<Integer>> getCustomersWithProducts(int orderId) {
         Map<Integer,List<Integer>> orderInfo = null;
         Order order = orders.get(orderId);
 
-        if(order.)
+        orderInfo.putAll(order.getOrderData());
+
+        return orderInfo;
     }
 }

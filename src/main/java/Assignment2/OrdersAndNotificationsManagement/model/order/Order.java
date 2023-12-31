@@ -5,6 +5,7 @@ import Assignment2.OrdersAndNotificationsManagement.model.user.Customer;
 
 import java.util.Date;
 import java.util.List;
+import java.util.Map;
 
 // implement an interface?
 public abstract class Order {
@@ -22,6 +23,7 @@ public abstract class Order {
     public abstract void addOrder(Order order);
     public abstract boolean hasOrder(Order order);
     public abstract void removeOrder(Order order);
+    public abstract Map<Integer, List<Integer>> getOrderData();
 
     public int getId() {
         return id;

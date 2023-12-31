@@ -19,4 +19,5 @@ public interface ICustomerRepository {
     public Customer authenticate(Credentials credentials);
     public void deductBalance(Credentials credentials, Double price);
     public boolean checkBalance(Credentials credentials, Double price);
+    public boolean isFriends(int id, int friend);
 }

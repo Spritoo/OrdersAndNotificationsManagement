@@ -5,6 +5,7 @@ import Assignment2.OrdersAndNotificationsManagement.model.user.Customer;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Map;
 
 public class CompoundOrder extends Order {
     List<Order> orders; // can be either simple order or compound orders
@@ -40,6 +41,16 @@ public class CompoundOrder extends Order {
 
     public void removeOrder(Order order){
         orders.remove(order);
+    }
+
+    @Override
+    public Map<Integer, List<Integer>> getOrderData() {
+        Map<Integer, List<Integer>> data = null;
+
+        for(Order order : orders) {
+            data.putAll(getOrderData());
+        }
+        return data;
     }
 
     @Override

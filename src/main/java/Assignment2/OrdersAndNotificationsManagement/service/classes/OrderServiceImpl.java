@@ -15,6 +15,7 @@ import org.springframework.stereotype.Service;
 import java.time.temporal.ChronoUnit;
 import java.util.Date;
 import java.util.List;
+import java.util.Map;
 
 @Service
 public class OrderServiceImpl implements IOrderService {
@@ -53,7 +54,12 @@ public class OrderServiceImpl implements IOrderService {
     }
 
     @Override
-    public CancellationStatus cancelOrder(int orderId) {
+    public void cancelOrder(int orderId) {
+        orderRepository.removeOrder(orderId);
+    }
+
+    @Override
+    public CancellationStatus canCancelOrder(int orderId) {
         Order order = getOrder(orderId);
 
         if (order == null) {
@@ -69,8 +75,6 @@ public class OrderServiceImpl implements IOrderService {
         if (diffInDays > MAX_ORDER_CANCEL_TIME_IN_DAYS) {
             return CancellationStatus.OrderNotCancellable;
         }
-
-        orderRepository.removeOrder(orderId);
 
         return CancellationStatus.Success;
     }
@@ -126,7 +130,10 @@ public class OrderServiceImpl implements IOrderService {
         return EditStatus.Success;
     }
 
-    public List<Customer,List<Product>>
+    @Override
+    public Map<Integer, List<Integer>> getOrderData(int orderID) {
+        return orderRepository.getOrder(orderID).getOrderData();
+    }
 
     /* private CustomerRepository customerRepository;
     private ProductRepository productRepository;

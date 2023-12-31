@@ -11,6 +11,7 @@ import Assignment2.OrdersAndNotificationsManagement.service.interfaces.ICustomer
 import org.springframework.stereotype.Service;
 
 import java.util.List;
+import java.util.Map;
 
 @Service
 public class CustomerServiceImpl implements ICustomerService {
@@ -69,14 +70,24 @@ public class CustomerServiceImpl implements ICustomerService {
     }
 
     @Override
-    public void returnBalanceAfterCancellation(Credentials credentials, List<Integer> productsId) {
-        Customer customer = customerRepository.getCustomerByCredentials(credentials);
+    public void returnBalanceAfterCancellation(Map<Integer, List<Integer>> customerAndProducts) {
+        for (Map.Entry<Integer, List<Integer>> entry : customerAndProducts.entrySet()) {
+            int customerID = entry.getKey();
+            List<Integer> productIDs = entry.getValue();
 
-        for(int productID : productsId) {
-            double customerBalance = customerRepository.getCustomerByCredentials(credentials).getUserInfo().getBalance();
-            double productPrice = productRepository.getProduct(productID).getPrice();
+            Customer customer = customerRepository.getCustomerById(customerID);
 
-            customerRepository.updateBalance(customer, customerBalance + productPrice);
+            for (int productID : productIDs) {
+                double customerBalance = customerRepository.getCustomerById(customerID).getUserInfo().getBalance();
+                double productPrice = productRepository.getProduct(productID).getPrice();
+
+                customerRepository.updateBalance(customer, customerBalance + productPrice);
+            }
         }
+    }
+
+    @Override
+    public boolean isFriends(int id, int friend) {
+        return customerRepository.isFriends(id, friend);
     }
 }

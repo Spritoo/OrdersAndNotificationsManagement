@@ -5,6 +5,7 @@ import Assignment2.OrdersAndNotificationsManagement.model.user.Customer;
 import Assignment2.OrdersAndNotificationsManagement.model.user.UserInfo;
 
 import java.util.List;
+import java.util.Map;
 
 
 public interface ICustomerService {
@@ -14,5 +15,6 @@ public interface ICustomerService {
     public UserInfo getCustomerInfo(Credentials credentials);
     public Customer authenticate(Credentials credentials);
     public boolean correctBalance(Credentials credentials, int productID);
-    public void returnBalanceAfterCancellation(Credentials credentials, List<Integer> productsId);
+    public void returnBalanceAfterCancellation(Map<Integer, List<Integer>> customerAndProducts);
+    public boolean isFriends(int id, int friend);
 }
