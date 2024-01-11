@@ -9,7 +9,7 @@ import Assignment2.OrdersAndNotificationsManagement.model.order.CompoundOrder;
 import Assignment2.OrdersAndNotificationsManagement.model.order.Order;
 import Assignment2.OrdersAndNotificationsManagement.model.order.SimpleOrder;
 import Assignment2.OrdersAndNotificationsManagement.model.user.Customer;
-import Assignment2.OrdersAndNotificationsManagement.repository.interfaces.INotificationService;
+import Assignment2.OrdersAndNotificationsManagement.service.interfaces.INotificationService;
 import Assignment2.OrdersAndNotificationsManagement.service.interfaces.ICustomerService;
 import Assignment2.OrdersAndNotificationsManagement.service.interfaces.IOrderService;
 import Assignment2.OrdersAndNotificationsManagement.util.Pair;

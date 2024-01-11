@@ -12,8 +12,8 @@ import Assignment2.OrdersAndNotificationsManagement.model.user.Customer;
 import Assignment2.OrdersAndNotificationsManagement.repository.classes.NotificationTemplateRepository;
 import Assignment2.OrdersAndNotificationsManagement.repository.interfaces.INotificationRepository;
 import Assignment2.OrdersAndNotificationsManagement.repository.classes.NotificationRepository;
-import Assignment2.OrdersAndNotificationsManagement.repository.interfaces.INotificationService;
 import Assignment2.OrdersAndNotificationsManagement.repository.interfaces.INotificationTemplateRepository;
+import Assignment2.OrdersAndNotificationsManagement.service.interfaces.INotificationService;
 import org.springframework.scheduling.annotation.Scheduled;
 import org.springframework.stereotype.Service;
 

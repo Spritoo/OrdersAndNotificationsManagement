@@ -1,4 +1,4 @@
-package Assignment2.OrdersAndNotificationsManagement.repository.interfaces;
+package Assignment2.OrdersAndNotificationsManagement.service.interfaces;
 
 import Assignment2.OrdersAndNotificationsManagement.model.Language;
 import Assignment2.OrdersAndNotificationsManagement.model.notification.Notification;
