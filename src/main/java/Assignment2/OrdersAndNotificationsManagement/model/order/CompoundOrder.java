@@ -49,7 +49,7 @@ public class CompoundOrder extends Order {
         Map<Integer, List<Integer>> data = new HashMap<>();
 
         for(Order order : orders) {
-            data.putAll(getOrderData());
+            data.putAll(order.getOrderData());
         }
         return data;
     }
