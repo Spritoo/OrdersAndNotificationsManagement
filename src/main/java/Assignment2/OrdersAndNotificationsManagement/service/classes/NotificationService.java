@@ -4,7 +4,9 @@ import Assignment2.OrdersAndNotificationsManagement.dispatcher.EmailNotification
 import Assignment2.OrdersAndNotificationsManagement.dispatcher.INotificationDispatcher;
 import Assignment2.OrdersAndNotificationsManagement.dispatcher.SMSNotificationDispatcher;
 import Assignment2.OrdersAndNotificationsManagement.model.Language;
+import Assignment2.OrdersAndNotificationsManagement.model.notification.EmailNotification;
 import Assignment2.OrdersAndNotificationsManagement.model.notification.Notification;
+import Assignment2.OrdersAndNotificationsManagement.model.notification.SMSNotification;
 import Assignment2.OrdersAndNotificationsManagement.model.notification.template.NotificationTemplate;
 import Assignment2.OrdersAndNotificationsManagement.model.user.Customer;
 import Assignment2.OrdersAndNotificationsManagement.repository.classes.NotificationTemplateRepository;
@@ -32,8 +34,8 @@ public class NotificationService implements INotificationService {
 
     public NotificationService() {
         dispatchers = Map.of(
-            EmailNotificationDispatcher.class, new EmailNotificationDispatcher(),
-            SMSNotificationDispatcher.class, new SMSNotificationDispatcher()
+            EmailNotification.class, new EmailNotificationDispatcher(),
+            SMSNotification.class, new SMSNotificationDispatcher()
         );
 
         for (Class<?> channel: getAvailableChannels()) {
